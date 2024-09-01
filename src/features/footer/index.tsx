@@ -12,7 +12,7 @@ export const Footer = () => {
           Conviértete en auspiciador en{" "}
           <a
             href="https://communityos.io/ser-sponsor/"
-            className="font-bold text-brand-primary hover:text-white font-koulen"
+            className="font-bold text-brand-primary hover:text-white"
           >
             communityos.io/ser-sponsor/
           </a>

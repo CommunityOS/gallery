@@ -48,14 +48,7 @@ export default function RootLayout({
   return (
     <ShallowRoutingProvider>
       <html lang="es">
-        <head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Koulen&display=swap"
-            rel="stylesheet"
-          />
-        </head>
+        <head />
         <body className="dark antialiased h-[100dvh] w-[100dvw] flex flex-col overflow-hidden">
           <Nav />
           <div className="h-full overflow-auto relative flex flex-col">

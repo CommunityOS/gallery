@@ -40,7 +40,7 @@ export default async function Page() {
             <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0"></span>
           </div>
           <CommunityOSLogo className="w-1/4 sm:w-1/2" />
-          <h1 className="mt-8 mb-4 font-bold uppercase tracking-widest font-koulen">
+          <h1 className="mt-8 mb-4 font-bold uppercase tracking-widest">
             CommunityOS
           </h1>
           <p className="z-10 max-w-[40ch] sm:max-w-[32ch]">

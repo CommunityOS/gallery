@@ -94,7 +94,7 @@ export default async function Page({
             <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
           </div>
           <Logo color="#000" />
-          <h1 className="mt-8 mb-4 text-black font-bold uppercase tracking-widest font-koulen">
+          <h1 className="mt-8 mb-4 text-black font-bold uppercase tracking-widest">
             JSConf CHILE 2023
           </h1>
           <p className="z-10 max-w-[40ch] text-black/80 sm:max-w-[32ch]">

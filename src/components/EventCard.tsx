@@ -25,7 +25,7 @@ export const EventCard = ({ eventName, photo }: Props) => {
                   35w"
         />
       </div>
-      <h1 className="z-10 mt-8 mb-4 font-bold uppercase tracking-widest font-koulen text-xl">
+      <h1 className="z-10 mt-8 mb-4 font-bold uppercase tracking-widest text-xl">
         {eventName}
       </h1>
 
