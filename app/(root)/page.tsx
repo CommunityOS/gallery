@@ -1,10 +1,10 @@
-import Image from "next/image";
 import CommunityOSLogo from "../../src/components/Icons/JSChileLogo";
 import { AnimatedNavigationCardLink } from "../../src/components/Transitions/AnimatedNavigationCardLink";
 import { AnimatedGridContainer } from "../../src/components/Transitions/AnimatedGridContainer";
 import React from "react";
 import { fetchServer } from "@/fetch-server";
 import { SearchEventsDocument } from "@/gql/graphql";
+import Image from "next-export-optimize-images/remote-image";
 
 export default async function Page() {
   const data = await fetchServer(

@@ -1,7 +1,8 @@
 "use client";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, Suspense, useEffect, useRef, useState } from "react";
 import useKeypress from "react-use-keypress";
 import SharedModal from "./SharedModal";
 import { SearchEventsQuery } from "@/gql/graphql";
@@ -59,7 +60,8 @@ const InternalModal = ({
     />
   );
 };
-export default function Modal({
+
+function Modal({
   images,
   eventId,
   forcedPhotoId,
@@ -125,5 +127,23 @@ export default function Modal({
         </Transition.Child>
       </Dialog>
     </Transition>
+  );
+}
+
+export default function ModalSSR({
+  images,
+  eventId,
+  forcedPhotoId,
+}: {
+  images: (SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0] & {
+    index: number;
+  })[];
+  eventId: string;
+  forcedPhotoId?: string;
+}) {
+  return (
+    <Suspense>
+      <Modal images={images} eventId={eventId} forcedPhotoId={forcedPhotoId} />
+    </Suspense>
   );
 }

@@ -1,69 +1,46 @@
-import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../../../../../src/components/Icons/Logo";
 import Modal from "../../../../../../src/components/Modal";
 import { API } from "../../../../../../src/gql/sanityApi";
-import { urlForImage } from "../../../../../../src/lib/sanity";
-import { Metadata, ResolvingMetadata } from "next/types";
+import { fetchServer } from "@/fetch-server";
+import { SearchEventsDocument } from "@/gql/graphql";
+import Image from "next-export-optimize-images/remote-image";
 
-export const runtime = "edge";
-
-/* export async function generateMetadata(
-  {
-    params: { eventId, photoId },
-  }: {
-    params: { eventId: string; photoId: string };
-  },
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
-  const data = await API.searchEvents({
-    input: {
-      search: {
-        name: "AI Hackathon",
-        id: null,
-        startDateTimeFrom: null,
-        startDateTimeTo: null,
-        status: null,
-        ticketTags: null,
-        userHasTickets: null,
-        visibility: null,
-      },
-      pagination: {
-        page: 0,
-        pageSize: 1,
+export async function generateStaticParams() {
+  const data = await fetchServer(
+    SearchEventsDocument,
+    {
+      input: {
+        search: {
+          name: "AI Hackathon",
+          id: null,
+          startDateTimeFrom: null,
+          startDateTimeTo: null,
+          status: null,
+          ticketTags: null,
+          userHasTickets: null,
+          visibility: null,
+        },
+        pagination: {
+          page: 0,
+          pageSize: 1,
+        },
       },
     },
+    "force-cache",
+  );
+
+  const params = data.searchEvents.data.flatMap(({ galleries }) => {
+    return galleries.flatMap(({ id: galleryId, images }) => {
+      return images.map(({ id: photoId }) => ({
+        eventId: galleryId,
+        photoId: photoId,
+      }));
+    });
   });
 
-  const photo = data.searchEvents;
-  return {
-    title: photo.title,
-    publisher: "CommunityOS",
-    twitter: {
-      card: "summary_large_image",
-      creator: "@javascriptchile",
-      creatorId: "javascriptchile",
-    },
-    openGraph: {
-      images: [
-        urlForImage(photo.image, {
-          width: 1920,
-          auto: "format",
-          fit: "max",
-          height: 1080,
-          crop: "focalpoint",
-        })?.toString(),
-        urlForImage(photo.image, {
-          width: 1280,
-          auto: "format",
-          fit: "max",
-          height: 768,
-          crop: "entropy",
-        })?.toString(),
-      ],
-    },
-  };
-} */
+  return params;
+}
 
 export default async function Page({
   params,
@@ -123,8 +100,8 @@ export default async function Page({
           <p className="z-10 max-w-[40ch] text-black/80 sm:max-w-[32ch]">
             Revive la primera conferencia de JavaScript de Chile! Tienes fotos
             que quieras agregar?{" "}
-            <a className="font-bold" href="mailto:contacto@jsconf.cl">
-              contacto@jsconf.cl
+            <a className="font-bold" href="mailto:contacto@communityos.io">
+              contacto@communityos.io
             </a>
           </p>
           <a
@@ -146,7 +123,7 @@ export default async function Page({
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
               <Image
-                alt="Next.js Conf photo"
+                alt=""
                 className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
                 style={{ transform: "translate3d(0, 0, 0)" }}
                 id={id}

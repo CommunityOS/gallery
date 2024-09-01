@@ -1,7 +1,5 @@
-"use client";
-import Image from "next/image";
+import Image from "next-export-optimize-images/remote-image";
 import React from "react";
-import { urlForImage } from "../lib/sanity";
 import { SearchEventsQuery } from "@/gql/graphql";
 
 type Props = {
@@ -14,7 +12,7 @@ export const EventCard = ({ eventName, photo }: Props) => {
     <div className="relative flex flex-end col-start-1 col-end-3 flex-col items-center justify-end gap-4 overflow-hidden rounded-lg p-6 text-center text-white shadow-highlight">
       <div className="absolute -inset-1 blur-[1px] bg-blend-darken opacity-40">
         <Image
-          alt="Next.js Conf photo"
+          alt=""
           className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
           style={{ transform: "translate3d(0, 0, 0)" }}
           id={photo.id}

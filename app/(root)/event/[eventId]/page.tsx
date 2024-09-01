@@ -1,11 +1,46 @@
-import Image from "next/image";
 import Modal from "../../../../src/components/Modal";
 import { API } from "../../../../src/gql/sanityApi";
 import { AnimatedNavigationCardLink } from "../../../../src/components/Transitions/AnimatedNavigationCardLink";
 import { AnimatedGridContainer } from "../../../../src/components/Transitions/AnimatedGridContainer";
 import { EventCard } from "../../../../src/components/EventCard";
+import { fetchServer } from "@/fetch-server";
+import { SearchEventsDocument } from "@/gql/graphql";
+import Image from "next-export-optimize-images/remote-image";
 
-export const runtime = "edge";
+export async function generateStaticParams() {
+  const data = await fetchServer(
+    SearchEventsDocument,
+    {
+      input: {
+        search: {
+          name: "AI Hackathon",
+          id: null,
+          startDateTimeFrom: null,
+          startDateTimeTo: null,
+          status: null,
+          ticketTags: null,
+          userHasTickets: null,
+          visibility: null,
+        },
+        pagination: {
+          page: 0,
+          pageSize: 1,
+        },
+      },
+    },
+    "force-cache",
+  );
+
+  const params = data.searchEvents.data.flatMap(({ galleries }) => {
+    return galleries.map(({ id }) => {
+      return {
+        eventId: id,
+      };
+    });
+  });
+
+  return params;
+}
 
 export default async function Page({
   params,
@@ -68,7 +103,7 @@ export default async function Page({
               className="after:content group relative block w-full cursor-pointer after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
               <Image
-                alt="Next.js Conf photo"
+                alt=""
                 className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
                 style={{ transform: "translate3d(0, 0, 0)" }}
                 id={id}
