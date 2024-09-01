@@ -23,6 +23,7 @@ export default function SharedModal({
   navigation,
   currentPhoto,
   direction,
+  galleryId,
 }: SharedModalProps) {
   const [loaded, setLoaded] = useState(false);
   const [mainImageLoaded, setMainImageLoaded] = useState(false);
@@ -210,7 +211,9 @@ export default function SharedModal({
                       <ArrowTopRightOnSquareIcon className="h-5 w-5" />
                     </a>
                     <a
-                      href={`https://twitter.com/intent/tweet?text=Mira%20esta%20foto%20de%20la%20JSConf%20Chile!%20https://gallery.jsconf.cl/p/${index}`}
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                        `¡Mira esta foto de CommunityOS! https://gallery.communityos.io/event/${galleryId}/photo/${currentImage.id}`,
+                      )}`}
                       className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                       target="_blank"
                       title="Share on Twitter"

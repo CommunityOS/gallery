@@ -57,6 +57,7 @@ const InternalModal = ({
       changePhotoId={changePhotoId}
       closeModal={handleClose}
       navigation={true}
+      galleryId={eventId}
     />
   );
 };
@@ -78,7 +79,8 @@ function Modal({
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   function handleClose() {
-    router.push(`/event/${eventId}`, { scroll: false });
+    setIsOpen(false);
+    router.push(`/event/${eventId}`);
   }
 
   useEffect(() => {

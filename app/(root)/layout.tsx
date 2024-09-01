@@ -1,8 +1,8 @@
 "use client";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { ElementRef, forwardRef } from "react";
-import FrozenRouter from "../../src/components/FrozenRouter";
+import { ElementRef, forwardRef, useState, useEffect } from "react";
 import { Footer } from "../../src/features/footer";
 import { ScrollArea } from "../../src/components/ui/scroll-area";
 
@@ -15,13 +15,16 @@ const Child = forwardRef<
       ref={ref}
       id="client-layout"
       className="flex-1 flex flex-col overflow-hidden"
-      transition={{ duration: 0.2, delay: 0.2 }}
-      initial={{ opacity: 0, y: 33 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 33 }}
+      // initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        type: "tween",
+        duration: 0.3,
+        ease: "easeInOut",
+      }}
     >
       <ScrollArea className="flex flex-1">
-        <FrozenRouter>{props.children}</FrozenRouter>
+        {props.children}
         <Footer />
       </ScrollArea>
     </motion.div>
@@ -30,11 +33,23 @@ const Child = forwardRef<
 
 Child.displayName = "Child";
 
-export default function TransitionLayout(props: { children: React.ReactNode }) {
+export default function TransitionLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const segment = useSelectedLayoutSegment();
+  const [prevSegment, setPrevSegment] = useState(segment);
+
+  useEffect(() => {
+    if (segment !== prevSegment) {
+      setPrevSegment(segment);
+    }
+  }, [segment, prevSegment]);
+
   return (
-    <AnimatePresence mode="popLayout" initial={false}>
-      <Child key={segment}>{props.children}</Child>
+    <AnimatePresence mode="wait" initial={false}>
+      <Child key={prevSegment}>{children}</Child>
     </AnimatePresence>
   );
 }

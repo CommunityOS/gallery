@@ -1,10 +1,10 @@
 import Link from "next/link";
-import Logo from "../../../../../../src/components/Icons/Logo";
 import Modal from "../../../../../../src/components/Modal";
 import { API } from "../../../../../../src/gql/sanityApi";
 import { fetchServer } from "@/fetch-server";
 import { SearchEventsDocument } from "@/gql/graphql";
 import Image from "next-export-optimize-images/remote-image";
+import CommunityOSLogo from "@/components/Icons/JSChileLogo";
 
 export async function generateStaticParams() {
   const data = await fetchServer(
@@ -88,31 +88,20 @@ export default async function Page({
         forcedPhotoId={photoId}
       />
       <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-        <div className="after:content relative mb-5 flex h-[629px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-brand-primary px-6 pb-16 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
-          <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20">
-            <span className="flex max-h-full max-w-full items-center justify-center"></span>
-            <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
-          </div>
-          <Logo color="#000" />
-          <h1 className="mt-8 mb-4 text-black font-bold uppercase tracking-widest">
-            JSConf CHILE 2023
+        <div className="after:content relative mb-5 flex flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-brand-primary px-6 py-16 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight">
+          <CommunityOSLogo className="w-3/4 sm:w-1/2" />
+          <h1 className="mt-8 mb-4 font-bold uppercase tracking-widest">
+            CommunityOS
           </h1>
-          <p className="z-10 max-w-[40ch] text-black/80 sm:max-w-[32ch]">
-            Revive la primera conferencia de JavaScript de Chile! Tienes fotos
-            que quieras agregar?{" "}
+          <p className="z-10 max-w-[40ch] sm:max-w-[32ch]">
+            ¡Revive los eventos de la comunidad de CommunityOS! Tienes fotos que
+            quieras compartir? Envíanos un correo a{" "}
             <a className="font-bold" href="mailto:contacto@communityos.io">
               contacto@communityos.io
             </a>
           </p>
-          <a
-            className="pointer z-10 mt-6 rounded-lg border border-black px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/10 hover:text-white md:mt-4 bg-black"
-            href="https://github.com/JSConfCL/2023_images"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Github Repo
-          </a>
         </div>
+
         {[image].map(({ id, url }) => {
           return (
             <Link
