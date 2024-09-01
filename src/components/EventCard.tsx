@@ -2,16 +2,11 @@
 import Image from "next/image";
 import React from "react";
 import { urlForImage } from "../lib/sanity";
+import { SearchEventsQuery } from "@/gql/graphql";
 
 type Props = {
   eventName: string;
-  photo: {
-    asset: {
-      _id: string | null;
-      assetId: string | null;
-      metadata: { lqip: string };
-    } | null;
-  } | null;
+  photo: SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0];
 };
 
 export const EventCard = ({ eventName, photo }: Props) => {
@@ -22,15 +17,8 @@ export const EventCard = ({ eventName, photo }: Props) => {
           alt="Next.js Conf photo"
           className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
           style={{ transform: "translate3d(0, 0, 0)" }}
-          placeholder="blur"
-          blurDataURL={photo.asset.metadata.lqip}
-          id={photo.asset._id}
-          src={urlForImage(photo, {
-            width: 950,
-            height: 600,
-            fit: "max",
-            crop: "center",
-          })}
+          id={photo.id}
+          src={photo.url}
           width={950}
           height={430}
           sizes="(max-width: 640px) 25w,
@@ -45,8 +33,8 @@ export const EventCard = ({ eventName, photo }: Props) => {
 
       <p className="z-10 max-w-[40ch] sm:max-w-[32ch]">
         Tienes fotos que quieras compartir? Envíanos un correo a{" "}
-        <a className="font-bold" href="mailto:contacto@jschile.org">
-          contacto@jschile.org
+        <a className="font-bold" href="mailto:contacto@communityos.io">
+          contacto@communityos.io
         </a>
       </p>
     </div>

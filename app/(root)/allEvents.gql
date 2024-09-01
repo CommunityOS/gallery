@@ -1,32 +1,15 @@
-query allEvents($where: EventFilter, $sort: [EventSorting!]) {
-  allEvent(where: $where, sort: $sort) {
-    _id
-    title
-    startDate
-    endDate
-    url
-    bgColor
-    mergedTitle
-    image {
-      asset {
-        _id
-        metadata {
-          lqip
-          blurHash
-        }
-        assetId
-      }
-    }
-    project {
-      title
-      bgColor
-      image {
-        asset {
-          _id
-          assetId
-          metadata {
-            lqip
-          }
+query searchEvents($input: PaginatedInputEventsSearchInput!) {
+  searchEvents(input: $input) {
+    data {
+      id
+      name
+      galleries {
+        id
+        description
+        images {
+          id
+          hosting
+          url
         }
       }
     }

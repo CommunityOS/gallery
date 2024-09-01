@@ -1,4 +1,4 @@
-import { EventImagesQuery } from "../src/gql/graphql";
+import { SearchEventsQuery } from "@/gql/jschileAPI";
 
 /* eslint-disable no-unused-vars */
 export interface ImageProps {
@@ -10,8 +10,12 @@ export interface ImageProps {
 
 export interface SharedModalProps {
   index: number;
-  images?: (EventImagesQuery["allEventImage"][number] & { index: number })[];
-  currentPhoto?: EventImagesQuery["allEventImage"][number];
+  images?: (SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0] & {
+    index: number;
+  })[];
+  currentPhoto?: SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0] & {
+    index: number;
+  };
   changePhotoId: (newVal: number) => void;
   closeModal: () => void;
   navigation: boolean;

@@ -4,6 +4,7 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { hostname: "imagedelivery.net/dqFoxiedZNoncKJ9uqxz0g" },
+      { hostname: "imagedelivery.net" },
       { hostname: "images.jsconf.cl" },
       { hostname: "cdn.sanity.io" },
     ],

@@ -10,12 +10,12 @@ import { AuthProvider } from "../src/lib/supabase/AuthProvider";
 export async function generateMetadata({ params }): Promise<Metadata> {
   return {
     metadataBase: new URL("/", process.env.NEXT_PUBLIC_BASE_URL),
-    title: "Javascript Chile Gallery",
-    description: "Revive los eventos de la comunidad de JavaScript Chile!",
+    title: "CommunityOS Gallery",
+    description: "Revive los eventos de la comunidad de CommunityOS!",
     openGraph: {
-      siteName: "Javascript Chile Gallery",
-      title: "Javascript Chile Gallery",
-      description: "Revive los eventos de la comunidad de JavaScript Chile!",
+      siteName: "CommunityOS Gallery",
+      title: "CommunityOS Gallery",
+      description: "Revive los eventos de la comunidad de CommunityOS!",
       type: "website",
       images: [
         new URL("/og-image.png", process.env.NEXT_PUBLIC_BASE_URL).toString(),
@@ -25,8 +25,8 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       site: "@jsconfchile",
-      title: "Javascript Chile Gallery",
-      description: "Revive los eventos de la comunidad de JavaScript Chile!",
+      title: "CommunityOS Gallery",
+      description: "Revive los eventos de la comunidad de CommunityOS!",
       images: [
         {
           url: new URL(
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
           ).toString(),
           width: 1200,
           height: 630,
-          alt: "Javascript Chile Gallery",
+          alt: "CommunityOS Gallery",
         },
       ],
     },
@@ -74,5 +74,3 @@ export default function RootLayout({
     </ApolloWrapper>
   );
 }
-
-export const runtime = "edge";
