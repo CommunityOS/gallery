@@ -1,4 +1,5 @@
 "use client";
+
 import {
   ArrowDownTrayIcon,
   ArrowTopRightOnSquareIcon,
@@ -8,7 +9,6 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
-import NextImage from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "../../utils/animationVariants";
@@ -290,8 +290,8 @@ export default function SharedModal({
                           : ""
                       } relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
                     >
-                      <NextImage
-                        alt="small photos on the bottom"
+                      <img
+                        alt=""
                         width={180}
                         height={120}
                         className={`${

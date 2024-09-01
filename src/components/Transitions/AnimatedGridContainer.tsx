@@ -7,15 +7,11 @@ type Props = {
   className?: string;
 };
 
-export const AnimatedGridContainer = ({ className, children }: Props) => {
+export const AnimatedContainer = ({ className, children }: Props) => {
   return (
     <AnimatePresence>
       <motion.div
-        className={
-          className
-            ? className
-            : "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-        }
+        className={className}
         variants={{
           enter: {
             transition: {

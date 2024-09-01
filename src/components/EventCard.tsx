@@ -9,7 +9,7 @@ type Props = {
 
 export const EventCard = ({ eventName, photo }: Props) => {
   return (
-    <div className="relative flex flex-end col-start-1 col-end-3 flex-col items-center justify-end gap-4 overflow-hidden rounded-lg p-6 text-center text-white shadow-highlight">
+    <div className="relative flex flex-end sm:col-span-2 md:col-span-1 xl:col-span-2 flex-col items-center justify-end gap-4 overflow-hidden rounded-lg p-6 text-center text-white shadow-highlight">
       <div className="absolute -inset-1 blur-[1px] bg-blend-darken opacity-40">
         <Image
           alt=""

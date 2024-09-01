@@ -1,6 +1,6 @@
 import CommunityOSLogo from "../../src/components/Icons/JSChileLogo";
 import { AnimatedNavigationCardLink } from "../../src/components/Transitions/AnimatedNavigationCardLink";
-import { AnimatedGridContainer } from "../../src/components/Transitions/AnimatedGridContainer";
+import { AnimatedContainer } from "../../src/components/Transitions/AnimatedGridContainer";
 import React from "react";
 import { fetchServer } from "@/fetch-server";
 import { SearchEventsDocument } from "@/gql/graphql";
@@ -34,7 +34,7 @@ export default async function Page() {
 
   return (
     <main className="mx-auto max-w-[1960px] p-4 flex-1">
-      <AnimatedGridContainer>
+      <AnimatedContainer>
         <div className="after:content relative flex flex-grow-0 row-span-1 md:row-span-2 flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-brand-primary px-6 py-8 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
           <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20 pointer-events-none">
             <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0"></span>
@@ -80,7 +80,7 @@ export default async function Page() {
                     {image && (
                       <Image
                         alt="CommunityOS Event"
-                        className="transform rounded-lg brightness-90 z-0 transition will-change-auto group-hover:brightness-110"
+                        className="transform rounded-lg brightness-90 z-0 transition will-change-auto group-hover:brightness-110 min-h-full w-full object-cover"
                         style={{ transform: "translate3d(0, 0, 0)" }}
                         id={id}
                         src={image.url}
@@ -98,7 +98,7 @@ export default async function Page() {
             </React.Fragment>
           );
         })}
-      </AnimatedGridContainer>
+      </AnimatedContainer>
     </main>
   );
 }
