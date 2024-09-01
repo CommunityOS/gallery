@@ -24,7 +24,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      site: "@jsconfchile",
+      site: "@CommunityOS_",
       title: "CommunityOS Gallery",
       description: "Revive los eventos de la comunidad de CommunityOS!",
       images: [
