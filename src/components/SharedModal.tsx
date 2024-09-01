@@ -13,7 +13,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "../../utils/animationVariants";
 import type { SharedModalProps } from "../../utils/types";
-import { urlForImage } from "../lib/sanity";
 import Twitter from "./Icons/Twitter";
 
 export default function SharedModal({
