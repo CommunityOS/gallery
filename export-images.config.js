@@ -2,6 +2,7 @@
  * @type {import('next-export-optimize-images').Config}
  */
 const config = {
+  cacheDir: "optimized-images-cache",
   sourceImageParser: ({ src, defaultParser }) => {
     // Check if the URL matches the Cloudflare pattern
     const regExpMatches = src.match(
