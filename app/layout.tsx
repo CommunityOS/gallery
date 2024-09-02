@@ -28,7 +28,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       images: [
         {
           url: new URL(
-            `/og-image.png`,
+            `/og-image.jpg`,
             process.env.NEXT_PUBLIC_BASE_URL,
           ).toString(),
           width: 1200,
