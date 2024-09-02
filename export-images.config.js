@@ -1,3 +1,5 @@
+const { EXPORT_IMAGES_REMOTE_LIST } = require("./export-images-remote-list");
+
 /**
  * @type {import('next-export-optimize-images').Config}
  */
@@ -30,6 +32,7 @@ const config = {
   quality: 80, // Adjust quality as needed
   imageDir: "optimized-images",
   generateFormats: ["webp", "avif"], // Generate both WebP and AVIF formats
+  remoteImages: EXPORT_IMAGES_REMOTE_LIST,
 };
 
 module.exports = config;

@@ -5,7 +5,7 @@ import { AnimatedContainer } from "../../../../src/components/Transitions/Animat
 import { EventCard } from "../../../../src/components/EventCard";
 import { fetchServer } from "@/fetch-server";
 import { SearchEventsDocument } from "@/gql/graphql";
-import Image from "next-export-optimize-images/remote-image";
+import Image from "next-export-optimize-images/image";
 import "./page.module.css";
 import { cn } from "@/lib/utils";
 

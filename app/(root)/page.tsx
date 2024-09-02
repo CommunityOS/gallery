@@ -4,7 +4,7 @@ import { AnimatedContainer } from "../../src/components/Transitions/AnimatedGrid
 import React from "react";
 import { fetchServer } from "@/fetch-server";
 import { SearchEventsDocument } from "@/gql/graphql";
-import Image from "next-export-optimize-images/remote-image";
+import Image from "next-export-optimize-images/image";
 
 export default async function Page() {
   const data = await fetchServer(

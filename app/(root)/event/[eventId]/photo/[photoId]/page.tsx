@@ -3,7 +3,7 @@ import Modal from "../../../../../../src/components/Modal";
 import { API } from "../../../../../../src/gql/sanityApi";
 import { fetchServer } from "@/fetch-server";
 import { SearchEventsDocument } from "@/gql/graphql";
-import Image from "next-export-optimize-images/remote-image";
+import Image from "next-export-optimize-images/image";
 import CommunityOSLogo from "@/components/Icons/JSChileLogo";
 
 export async function generateStaticParams() {

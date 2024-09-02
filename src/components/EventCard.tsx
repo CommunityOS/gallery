@@ -1,4 +1,4 @@
-import Image from "next-export-optimize-images/remote-image";
+import Image from "next-export-optimize-images/image";
 import React from "react";
 import { SearchEventsQuery } from "@/gql/graphql";
 
