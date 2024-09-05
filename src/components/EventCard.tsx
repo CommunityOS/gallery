@@ -1,36 +1,22 @@
-"use client";
-import Image from "next/image";
+import Image from "next-export-optimize-images/image";
 import React from "react";
-import { urlForImage } from "../lib/sanity";
+import { SearchEventsQuery } from "@/gql/graphql";
 
 type Props = {
   eventName: string;
-  photo: {
-    asset: {
-      _id: string | null;
-      assetId: string | null;
-      metadata: { lqip: string };
-    } | null;
-  } | null;
+  photo: SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0];
 };
 
 export const EventCard = ({ eventName, photo }: Props) => {
   return (
-    <div className="relative flex flex-end col-start-1 col-end-3 flex-col items-center justify-end gap-4 overflow-hidden rounded-lg p-6 text-center text-white shadow-highlight">
+    <div className="relative flex flex-end sm:col-span-2 md:col-span-1 xl:col-span-2 flex-col items-center justify-end gap-4 overflow-hidden rounded-lg p-6 text-center text-white shadow-highlight">
       <div className="absolute -inset-1 blur-[1px] bg-blend-darken opacity-40">
         <Image
-          alt="Next.js Conf photo"
+          alt=""
           className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
           style={{ transform: "translate3d(0, 0, 0)" }}
-          placeholder="blur"
-          blurDataURL={photo.asset.metadata.lqip}
-          id={photo.asset._id}
-          src={urlForImage(photo, {
-            width: 950,
-            height: 600,
-            fit: "max",
-            crop: "center",
-          })}
+          id={photo.id}
+          src={photo.url}
           width={950}
           height={430}
           sizes="(max-width: 640px) 25w,
@@ -39,14 +25,14 @@ export const EventCard = ({ eventName, photo }: Props) => {
                   35w"
         />
       </div>
-      <h1 className="z-10 mt-8 mb-4 font-bold uppercase tracking-widest font-koulen text-xl">
+      <h1 className="z-10 mt-8 mb-4 font-bold uppercase tracking-widest text-xl">
         {eventName}
       </h1>
 
       <p className="z-10 max-w-[40ch] sm:max-w-[32ch]">
         Tienes fotos que quieras compartir? Envíanos un correo a{" "}
-        <a className="font-bold" href="mailto:contacto@jschile.org">
-          contacto@jschile.org
+        <a className="font-bold" href="mailto:contacto@communityos.io">
+          contacto@communityos.io
         </a>
       </p>
     </div>

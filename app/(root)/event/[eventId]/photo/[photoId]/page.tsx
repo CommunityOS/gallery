@@ -1,50 +1,45 @@
-import Image from "next/image";
 import Link from "next/link";
-import Logo from "../../../../../../src/components/Icons/Logo";
 import Modal from "../../../../../../src/components/Modal";
 import { API } from "../../../../../../src/gql/sanityApi";
-import { urlForImage } from "../../../../../../src/lib/sanity";
-import { Metadata, ResolvingMetadata } from "next/types";
+import { fetchServer } from "@/fetch-server";
+import { SearchEventsDocument } from "@/gql/graphql";
+import Image from "next-export-optimize-images/image";
+import CommunityOSLogo from "@/components/Icons/JSChileLogo";
 
-export async function generateMetadata(
-  {
-    params: { eventId, photoId },
-  }: {
-    params: { eventId: string; photoId: string };
-  },
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
-  const data = await API.singleEventImage({
-    photoId,
+export async function generateStaticParams() {
+  const data = await fetchServer(
+    SearchEventsDocument,
+    {
+      input: {
+        search: {
+          name: "AI Hackathon",
+          id: null,
+          startDateTimeFrom: null,
+          startDateTimeTo: null,
+          status: null,
+          ticketTags: null,
+          userHasTickets: null,
+          visibility: null,
+        },
+        pagination: {
+          page: 0,
+          pageSize: 1,
+        },
+      },
+    },
+    "force-cache",
+  );
+
+  const params = data.searchEvents.data.flatMap(({ galleries }) => {
+    return galleries.flatMap(({ id: galleryId, images }) => {
+      return images.map(({ id: photoId }) => ({
+        eventId: galleryId,
+        photoId: photoId,
+      }));
+    });
   });
-  const photo = data.EventImage;
-  return {
-    title: photo.title,
-    publisher: "JavaScript Chile",
-    twitter: {
-      card: "summary_large_image",
-      creator: "@javascriptchile",
-      creatorId: "javascriptchile",
-    },
-    openGraph: {
-      images: [
-        urlForImage(photo.image, {
-          width: 1920,
-          auto: "format",
-          fit: "max",
-          height: 1080,
-          crop: "focalpoint",
-        })?.toString(),
-        urlForImage(photo.image, {
-          width: 1280,
-          auto: "format",
-          fit: "max",
-          height: 768,
-          crop: "entropy",
-        })?.toString(),
-      ],
-    },
-  };
+
+  return params;
 }
 
 export default async function Page({
@@ -53,19 +48,34 @@ export default async function Page({
   params: { eventId: string; photoId: string };
 }) {
   const { eventId, photoId } = params;
-  const data = await API.eventImages({
-    eventId,
-    where: {
-      event: {
-        // @ts-expect-error los tipos estan mal, pide que le enviemos todas as propiedades de Event, cuando solo necesita una
-        _id: {
-          eq: eventId,
-        },
+  const data = await API.searchEvents({
+    input: {
+      search: {
+        name: "AI Hackathon",
+        id: null,
+        startDateTimeFrom: null,
+        startDateTimeTo: null,
+        status: null,
+        ticketTags: null,
+        userHasTickets: null,
+        visibility: null,
+      },
+      pagination: {
+        page: 0,
+        pageSize: 1,
       },
     },
   });
 
-  const imagesWithIndex = data.allEventImage.map((image, index) => ({
+  const event =
+    data.searchEvents.data.length > 0 ? data.searchEvents.data[0] : null;
+
+  const gallery = event
+    ? event.galleries.find((gallery) => gallery.id === eventId)
+    : null;
+
+  const image = gallery.images.find((image) => image.id === photoId) ?? null;
+  const imagesWithIndex = gallery.images.map((image, index) => ({
     ...image,
     index,
   }));
@@ -78,54 +88,35 @@ export default async function Page({
         forcedPhotoId={photoId}
       />
       <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
-        <div className="after:content relative mb-5 flex h-[629px] flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-jsconf-yellow px-6 pb-16 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight lg:pt-0">
-          <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20">
-            <span className="flex max-h-full max-w-full items-center justify-center"></span>
-            <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
-          </div>
-          <Logo color="#000" />
-          <h1 className="mt-8 mb-4 text-black font-bold uppercase tracking-widest font-koulen">
-            JSConf CHILE 2023
+        <div className="after:content relative mb-5 flex flex-col items-center justify-end gap-4 overflow-hidden rounded-lg bg-brand-primary px-6 py-16 text-center text-white shadow-highlight after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight">
+          <CommunityOSLogo className="w-3/4 sm:w-1/2" />
+          <h1 className="mt-8 mb-4 font-bold uppercase tracking-widest">
+            CommunityOS
           </h1>
-          <p className="z-10 max-w-[40ch] text-black/80 sm:max-w-[32ch]">
-            Revive la primera conferencia de JavaScript de Chile! Tienes fotos
-            que quieras agregar?{" "}
-            <a className="font-bold" href="mailto:contacto@jsconf.cl">
-              contacto@jsconf.cl
+          <p className="z-10 max-w-[40ch] sm:max-w-[32ch]">
+            ¡Revive los eventos de la comunidad de CommunityOS! Tienes fotos que
+            quieras compartir? Envíanos un correo a{" "}
+            <a className="font-bold" href="mailto:contacto@communityos.io">
+              contacto@communityos.io
             </a>
           </p>
-          <a
-            className="pointer z-10 mt-6 rounded-lg border border-black px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/10 hover:text-white md:mt-4 bg-black"
-            href="https://github.com/JSConfCL/2023_images"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Github Repo
-          </a>
         </div>
-        {data.allEventImage.map(({ _id, title, image }) => {
+
+        {[image].map(({ id, url }) => {
           return (
             <Link
-              key={_id}
-              href={`/event/${eventId}?photoId=${_id}`}
+              key={id}
+              href={`/event/${eventId}?photoId=${id}`}
               scroll={false}
               shallow
               className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
             >
               <Image
-                alt="Next.js Conf photo"
+                alt=""
                 className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
                 style={{ transform: "translate3d(0, 0, 0)" }}
-                placeholder="blur"
-                blurDataURL={image.asset.metadata.lqip}
-                id={_id}
-                src={urlForImage(image, {
-                  width: 500,
-                  height: 334,
-                  fit: "fill",
-                  auto: "format",
-                  crop: "entropy",
-                })}
+                id={id}
+                src={url}
                 width={720}
                 height={480}
                 sizes="(max-width: 640px) 25w,

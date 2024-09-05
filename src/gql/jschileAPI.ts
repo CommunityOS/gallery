@@ -23,10 +23,25 @@ export type Scalars = {
   DateTime: { input: string; output: string; }
 };
 
+export type AcceptTeamInvitationInput = {
+  teamId: Scalars['String']['input'];
+};
+
+export type AddPersonToTeamInput = {
+  teamId: Scalars['String']['input'];
+  userEmail: Scalars['String']['input'];
+};
+
+/** Response when adding a user to a team */
+export type AddUserToTeamResponseRef = {
+  team: TeamRef;
+  userIsInOtherTeams: Scalars['Boolean']['output'];
+};
+
 /** Representation of a workEmail */
 export type AllowedCurrency = {
   currency: Scalars['String']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   validPaymentMethods: ValidPaymentMethods;
 };
 
@@ -44,7 +59,7 @@ export type Community = {
   banner: Maybe<Scalars['String']['output']>;
   description: Maybe<Scalars['String']['output']>;
   events: Array<Event>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   logo: Maybe<Scalars['String']['output']>;
   name: Maybe<Scalars['String']['output']>;
   status: CommnunityStatus;
@@ -56,7 +71,7 @@ export type Company = {
   description: Maybe<Scalars['String']['output']>;
   domain: Scalars['String']['output'];
   hasBeenUpdated: Scalars['Boolean']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   logo: Maybe<Scalars['String']['output']>;
   name: Maybe<Scalars['String']['output']>;
   salarySubmissions: Scalars['Int']['output'];
@@ -74,7 +89,7 @@ export enum CompanyStatus {
 /** Representation of a consolidated payment entry log calculation */
 export type ConsolidatedPaymentLogEntry = {
   currencyId: Scalars['String']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   platform: Scalars['String']['output'];
   totalTransactionAmount: Scalars['Float']['output'];
 };
@@ -93,6 +108,10 @@ export type CreateCompanyInput = {
   name: InputMaybe<Scalars['String']['input']>;
   status: InputMaybe<CompanyStatus>;
   website: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreatePlaceholderUsersInput = {
+  users: Array<PlaceHolderUsersInput>;
 };
 
 export type CreateSalaryInput = {
@@ -124,25 +143,35 @@ export type EnqueueGoogleAlbumImportInput = {
 /** Representation of an Event (Events and Users, is what tickets are linked to) */
 export type Event = {
   address: Maybe<Scalars['String']['output']>;
+  bannerImageSanityRef: Maybe<Scalars['String']['output']>;
   community: Maybe<Community>;
   description: Maybe<Scalars['String']['output']>;
   endDateTime: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['String']['output'];
+  galleries: Array<Gallery>;
+  id: Scalars['ID']['output'];
   images: Array<SanityAssetRef>;
   latitude: Maybe<Scalars['String']['output']>;
   longitude: Maybe<Scalars['String']['output']>;
-  maxAttendees: Maybe<Scalars['Int']['output']>;
   meetingURL: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
+  schedules: Array<Schedule>;
+  speakers: Array<Speaker>;
   startDateTime: Scalars['DateTime']['output'];
   status: EventStatus;
   tags: Array<Tag>;
+  teams: Array<TeamRef>;
   /** List of tickets for sale or redemption for this event. (If you are looking for a user's tickets, use the usersTickets field) */
   tickets: Array<Ticket>;
   users: Array<User>;
   /** List of tickets that a user owns for this event. */
   usersTickets: Array<UserTicket>;
   visibility: EventVisibility;
+};
+
+
+/** Representation of an Event (Events and Users, is what tickets are linked to) */
+export type EventTicketsArgs = {
+  input: InputMaybe<EventsTicketTemplateSearchInput>;
 };
 
 
@@ -158,7 +187,6 @@ export type EventCreateInput = {
   endDateTime: InputMaybe<Scalars['DateTime']['input']>;
   latitude: InputMaybe<Scalars['String']['input']>;
   longitude: InputMaybe<Scalars['String']['input']>;
-  maxAttendees: Scalars['Int']['input'];
   meetingURL: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   startDateTime: Scalars['DateTime']['input'];
@@ -174,7 +202,6 @@ export type EventEditInput = {
   eventId: Scalars['String']['input'];
   latitude: InputMaybe<Scalars['String']['input']>;
   longitude: InputMaybe<Scalars['String']['input']>;
-  maxAttendees: InputMaybe<Scalars['Int']['input']>;
   meetingURL: InputMaybe<Scalars['String']['input']>;
   name: InputMaybe<Scalars['String']['input']>;
   startDateTime: InputMaybe<Scalars['DateTime']['input']>;
@@ -205,8 +232,13 @@ export type EventsSearchInput = {
   startDateTimeFrom: InputMaybe<Scalars['DateTime']['input']>;
   startDateTimeTo: InputMaybe<Scalars['DateTime']['input']>;
   status: InputMaybe<EventStatus>;
+  ticketTags: InputMaybe<Array<Scalars['String']['input']>>;
   userHasTickets: InputMaybe<Scalars['Boolean']['input']>;
   visibility: InputMaybe<EventVisibility>;
+};
+
+export type EventsTicketTemplateSearchInput = {
+  tags: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 export type EventsTicketsSearchInput = {
@@ -216,25 +248,73 @@ export type EventsTicketsSearchInput = {
   redemptionStatus: InputMaybe<TicketRedemptionStatus>;
 };
 
+export type FindUserTicketSearchInput = {
+  approvalStatus: InputMaybe<Array<TicketApprovalStatus>>;
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+  paymentStatus: InputMaybe<Array<TicketPaymentStatus>>;
+  redemptionStatus: InputMaybe<Array<TicketRedemptionStatus>>;
+  ticketsIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userTicketIds: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** Representation of a Gallery, usually associated to an event */
+export type Gallery = {
+  description: Maybe<Scalars['String']['output']>;
+  event: Maybe<Event>;
+  id: Scalars['ID']['output'];
+  images: Array<Image>;
+  name: Scalars['String']['output'];
+};
+
 export enum Gender {
-  Agender = 'agender',
-  Female = 'female',
-  Genderfluid = 'genderfluid',
-  Genderqueer = 'genderqueer',
-  Male = 'male',
-  NonBinary = 'non_binary',
-  Other = 'other',
-  PreferNotToSay = 'prefer_not_to_say',
-  TransgenderFemale = 'transgender_female',
-  TransgenderMale = 'transgender_male',
-  TwoSpirit = 'two_spirit'
+  Agender = 'Agender',
+  Female = 'Female',
+  Genderfluid = 'Genderfluid',
+  Genderqueer = 'Genderqueer',
+  Male = 'Male',
+  NonBinary = 'NonBinary',
+  Other = 'Other',
+  PreferNotToSay = 'PreferNotToSay',
+  TransgenderFemale = 'TransgenderFemale',
+  TransgenderMale = 'TransgenderMale',
+  TwoSpirit = 'TwoSpirit',
+  Empty = 'empty'
 }
 
 export type GeneratePaymentLinkInput = {
   currencyId: Scalars['String']['input'];
 };
 
+export type GiftTicketsToUserInput = {
+  allowMultipleTicketsPerUsers: Scalars['Boolean']['input'];
+  autoApproveTickets: Scalars['Boolean']['input'];
+  notifyUsers: Scalars['Boolean']['input'];
+  ticketIds: Array<Scalars['String']['input']>;
+  userIds: Array<Scalars['String']['input']>;
+};
+
+/** An image, usually associated to a gallery */
+export type Image = {
+  gallery: Maybe<Gallery>;
+  hosting: ImageHostingEnum;
+  id: Scalars['ID']['output'];
+  url: Scalars['String']['output'];
+};
+
+export enum ImageHostingEnum {
+  Cloudflare = 'cloudflare',
+  Sanity = 'sanity'
+}
+
 export type Mutation = {
+  acceptGiftedTicket: UserTicket;
+  /** Accept the user's invitation to a team */
+  acceptTeamInvitation: TeamRef;
+  /** Try to add a person to a team */
+  addPersonToTeam: AddUserToTeamResponseRef;
+  /** Apply to a waitlist */
+  applyToWaitlist: UserTicket;
   /** Approve a ticket */
   approvalUserTicket: UserTicket;
   /** Cancel a ticket */
@@ -249,10 +329,16 @@ export type Mutation = {
   createCompany: Company;
   /** Create an event */
   createEvent: Event;
+  /** Create placeholder users (used for things like invitations) */
+  createPlaceholderdUsers: Array<User>;
   /** Create a salary */
   createSalary: Salary;
+  /** Create a team, associated to a specific event */
+  createTeam: TeamRef;
   /** Create a ticket */
   createTicket: Ticket;
+  /** Try to add a person to a team */
+  deletePersonFomTeam: TeamRef;
   /** Edit an community */
   editCommunity: Community;
   /** Edit an event */
@@ -261,22 +347,50 @@ export type Mutation = {
   editTicket: Ticket;
   /** Enqueue images to import */
   enqueueGoogleAlbumImport: Scalars['Boolean']['output'];
+  /** Gift tickets to users, allowing multiple tickets per user, and conditionally notify them */
+  giftTicketsToUsers: Array<UserTicket>;
   /** Create a purchase order */
   payForPurchaseOrder: PurchaseOrder;
   /** Redeem a ticket */
   redeemUserTicket: UserTicket;
+  /** Reject the user's invitation to a team */
+  rejectTeamInvitation: TeamRef;
   /** Kickoff the email validation flow. This flow will links an email to a user, create a company if it does not exist, and allows filling data for that email's position */
   startWorkEmailValidation: WorkEmail;
+  triggerUserTicketApprovalReview: Array<UserTicket>;
   /** Update a company */
   updateCompany: Company;
+  updateMyUserData: User;
   /** Create a salary */
   updateSalary: Salary;
+  /** Updates a team information */
+  updateTeam: TeamRef;
   /** Update a user */
   updateUser: User;
   /** Update a user role */
   updateUserRoleInCommunity: User;
   /** Validates work email for a user */
   validateWorkEmail: WorkEmail;
+};
+
+
+export type MutationAcceptGiftedTicketArgs = {
+  userTicketId: Scalars['String']['input'];
+};
+
+
+export type MutationAcceptTeamInvitationArgs = {
+  input: AcceptTeamInvitationInput;
+};
+
+
+export type MutationAddPersonToTeamArgs = {
+  input: AddPersonToTeamInput;
+};
+
+
+export type MutationApplyToWaitlistArgs = {
+  ticketId: Scalars['String']['input'];
 };
 
 
@@ -315,13 +429,28 @@ export type MutationCreateEventArgs = {
 };
 
 
+export type MutationCreatePlaceholderdUsersArgs = {
+  input: CreatePlaceholderUsersInput;
+};
+
+
 export type MutationCreateSalaryArgs = {
   input: CreateSalaryInput;
 };
 
 
+export type MutationCreateTeamArgs = {
+  input: TeamCreateInput;
+};
+
+
 export type MutationCreateTicketArgs = {
   input: TicketCreateInput;
+};
+
+
+export type MutationDeletePersonFomTeamArgs = {
+  input: RemovePersonFromTeamInput;
 };
 
 
@@ -345,6 +474,11 @@ export type MutationEnqueueGoogleAlbumImportArgs = {
 };
 
 
+export type MutationGiftTicketsToUsersArgs = {
+  input: GiftTicketsToUserInput;
+};
+
+
 export type MutationPayForPurchaseOrderArgs = {
   input: PayForPurchaseOrderInput;
 };
@@ -355,8 +489,19 @@ export type MutationRedeemUserTicketArgs = {
 };
 
 
+export type MutationRejectTeamInvitationArgs = {
+  input: RejectTeamInvitationInput;
+};
+
+
 export type MutationStartWorkEmailValidationArgs = {
   email: Scalars['String']['input'];
+};
+
+
+export type MutationTriggerUserTicketApprovalReviewArgs = {
+  eventId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 
@@ -365,8 +510,18 @@ export type MutationUpdateCompanyArgs = {
 };
 
 
+export type MutationUpdateMyUserDataArgs = {
+  input: UpdateUserDataInput;
+};
+
+
 export type MutationUpdateSalaryArgs = {
   input: UpdateSalaryInput;
+};
+
+
+export type MutationUpdateTeamArgs = {
+  input: UpdateTeamInput;
 };
 
 
@@ -384,11 +539,15 @@ export type MutationValidateWorkEmailArgs = {
   confirmationToken: Scalars['String']['input'];
 };
 
+export type MyPurchaseOrdersInput = {
+  paymentPlatform: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MyTicketsSearchValues = {
-  approvalStatus: InputMaybe<TicketApprovalStatus>;
+  approvalStatus: InputMaybe<Array<TicketApprovalStatus>>;
   eventId: InputMaybe<Scalars['String']['input']>;
-  paymentStatus: InputMaybe<TicketPaymentStatus>;
-  redemptionStatus: InputMaybe<TicketRedemptionStatus>;
+  paymentStatus: InputMaybe<Array<TicketPaymentStatus>>;
+  redemptionStatus: InputMaybe<Array<TicketRedemptionStatus>>;
 };
 
 /** Type used for querying the paginated leaves and it's paginated meta data */
@@ -402,9 +561,47 @@ export type PaginatedInputEventsSearchInput = {
   search: InputMaybe<EventsSearchInput>;
 };
 
+export type PaginatedInputFindUserTicketSearchInput = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<FindUserTicketSearchInput>;
+};
+
+export type PaginatedInputMyPurchaseOrdersInput = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<MyPurchaseOrdersInput>;
+};
+
 export type PaginatedInputMyTicketsSearchValues = {
   pagination: PaginationSearchInputParams;
   search: InputMaybe<MyTicketsSearchValues>;
+};
+
+export type PaginatedInputTeamSearchValues = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<TeamSearchValues>;
+};
+
+export type PaginatedInputUserSearchValues = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<UserSearchValues>;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedPurchaseOrder = {
+  data: Array<PurchaseOrder>;
+  pagination: Pagination;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedTeamRef = {
+  data: Array<TeamRef>;
+  pagination: Pagination;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedUser = {
+  data: Array<User>;
+  pagination: Pagination;
 };
 
 /** Type used for querying the paginated leaves and it's paginated meta data */
@@ -427,6 +624,12 @@ export type PaginationSearchInputParams = {
   pageSize: Scalars['Int']['input'];
 };
 
+export enum ParticipationStatus {
+  Accepted = 'accepted',
+  NotAccepted = 'not_accepted',
+  WaitingResolution = 'waiting_resolution'
+}
+
 export type PayForPurchaseOrderInput = {
   currencyID: Scalars['String']['input'];
   purchaseOrderId: Scalars['String']['input'];
@@ -445,22 +648,46 @@ export type PricingInputField = {
   value_in_cents: Scalars['Int']['input'];
 };
 
+export enum PronounsEnum {
+  Empty = 'empty',
+  HeHim = 'heHim',
+  Other = 'other',
+  SheHer = 'sheHer',
+  TheyThem = 'theyThem'
+}
+
 /** Representation of a payment log entry */
 export type PublicFinanceEntryRef = {
   createdAt: Scalars['DateTime']['output'];
   currencyId: Scalars['String']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   platform: Scalars['String']['output'];
   transactionAmount: Scalars['Float']['output'];
   transactionDate: Maybe<Scalars['DateTime']['output']>;
 };
 
+export type PublicTicketInput = {
+  publicTicketId: Scalars['String']['input'];
+};
+
+/** Representation of the public information of a User ticket */
+export type PublicUserTicket = {
+  id: Scalars['ID']['output'];
+  ticket: Ticket;
+  userImage: Maybe<Scalars['String']['output']>;
+  userName: Maybe<Scalars['String']['output']>;
+  userUsername: Maybe<Scalars['String']['output']>;
+};
+
 /** Representation of a Purchase Order */
 export type PurchaseOrder = {
+  createdAt: Maybe<Scalars['DateTime']['output']>;
   currency: Maybe<AllowedCurrency>;
   finalPrice: Maybe<Scalars['Float']['output']>;
   id: Scalars['ID']['output'];
   paymentLink: Maybe<Scalars['String']['output']>;
+  paymentPlatform: Maybe<Scalars['String']['output']>;
+  purchasePaymentStatus: Maybe<PurchaseOrderPaymentStatusEnum>;
   status: Maybe<PurchaseOrderStatusEnum>;
   tickets: Array<UserTicket>;
 };
@@ -470,10 +697,16 @@ export type PurchaseOrderInput = {
   ticketId: Scalars['String']['input'];
 };
 
-export enum PurchaseOrderStatusEnum {
+export enum PurchaseOrderPaymentStatusEnum {
   NotRequired = 'not_required',
   Paid = 'paid',
   Unpaid = 'unpaid'
+}
+
+export enum PurchaseOrderStatusEnum {
+  Complete = 'complete',
+  Expired = 'expired',
+  Open = 'open'
 }
 
 export type Query = {
@@ -489,23 +722,34 @@ export type Query = {
   event: Maybe<Event>;
   /** Get a list of images, that are attached to an event */
   eventImages: Array<SanityAssetRef>;
+  /** Get a list of user tickets */
+  findUserTickets: PaginatedUserTicket;
+  /** Get a single waitlist */
+  getWaitlist: Waitlist;
   /** Get the current user */
   me: User;
+  /** Get a list of purchase orders for the authenticated user */
+  myPurchaseOrders: PaginatedPurchaseOrder;
   /** Get a list of tickets for the current user */
   myTickets: PaginatedUserTicket;
+  /** Get a list of user tickets */
+  publicTicketInfo: PublicUserTicket;
   /** Get a list of salaries associated to the user */
   salaries: Array<Salary>;
+  /** Get a schedule by its ID */
+  schedule: Schedule;
   /** Search a consolidated payment logs, by date, aggregated by platform and currency_id */
   searchConsolidatedPaymentLogs: Array<ConsolidatedPaymentLogEntry>;
   /** Get a list of events. Filter by name, id, status or date */
   searchEvents: PaginatedEvent;
   /** Search on the payment logs by date, and returns a list of payment logs */
   searchPaymentLogs: Array<PublicFinanceEntryRef>;
+  searchTeams: PaginatedTeamRef;
   status: Scalars['String']['output'];
   /** Get a list of tags */
   tags: Array<Tag>;
   /** Get a list of users */
-  userSearch: Array<User>;
+  userSearch: PaginatedUser;
   /** Get a list of users */
   users: Array<User>;
   /** Get a workEmail and check if its validated for this user */
@@ -551,8 +795,33 @@ export type QueryEventImagesArgs = {
 };
 
 
+export type QueryFindUserTicketsArgs = {
+  input: PaginatedInputFindUserTicketSearchInput;
+};
+
+
+export type QueryGetWaitlistArgs = {
+  ticketId: Scalars['String']['input'];
+};
+
+
+export type QueryMyPurchaseOrdersArgs = {
+  input: PaginatedInputMyPurchaseOrdersInput;
+};
+
+
 export type QueryMyTicketsArgs = {
   input: PaginatedInputMyTicketsSearchValues;
+};
+
+
+export type QueryPublicTicketInfoArgs = {
+  input: PublicTicketInput;
+};
+
+
+export type QueryScheduleArgs = {
+  scheduleId: Scalars['String']['input'];
 };
 
 
@@ -571,6 +840,11 @@ export type QuerySearchPaymentLogsArgs = {
 };
 
 
+export type QuerySearchTeamsArgs = {
+  input: PaginatedInputTeamSearchValues;
+};
+
+
 export type QueryStatusArgs = {
   name: InputMaybe<Scalars['String']['input']>;
 };
@@ -582,7 +856,7 @@ export type QueryTagsArgs = {
 
 
 export type QueryUserSearchArgs = {
-  input: UserSearchInput;
+  input: PaginatedInputUserSearchValues;
 };
 
 
@@ -595,12 +869,25 @@ export type QueryWorkRoleSenioritiesArgs = {
   input: WorkRoleSenioritiesInput;
 };
 
+export type RsvpFilterInput = {
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
 export type RedeemUserTicketError = {
   error: Scalars['Boolean']['output'];
   errorMessage: Scalars['String']['output'];
 };
 
 export type RedeemUserTicketResponse = PurchaseOrder | RedeemUserTicketError;
+
+export type RejectTeamInvitationInput = {
+  teamId: Scalars['String']['input'];
+};
+
+export type RemovePersonFromTeamInput = {
+  teamId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
 
 /** Representation of a workEmail */
 export type Salary = {
@@ -610,7 +897,7 @@ export type Salary = {
   currencyCode: Scalars['String']['output'];
   gender: Maybe<Gender>;
   genderOtherText: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   typeOfEmployment: TypeOfEmployment;
   workMetodology: WorkMetodology;
   workRole: WorkRole;
@@ -621,11 +908,22 @@ export type Salary = {
 /** Representation of a Sanity Asset */
 export type SanityAssetRef = {
   assetId: Scalars['String']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   originalFilename: Scalars['String']['output'];
   path: Scalars['String']['output'];
   size: Scalars['Int']['output'];
   url: Scalars['String']['output'];
+};
+
+/** Representation of a Schedule */
+export type Schedule = {
+  description: Maybe<Scalars['String']['output']>;
+  endTimestamp: Scalars['DateTime']['output'];
+  event: Event;
+  id: Scalars['ID']['output'];
+  sessions: Array<Session>;
+  startTimestamp: Scalars['DateTime']['output'];
+  title: Scalars['String']['output'];
 };
 
 export type SearchCompaniesInput = {
@@ -647,13 +945,53 @@ export enum SearchableUserTags {
 }
 
 export enum ServiceErrors {
-  Unauthenticated = 'UNAUTHENTICATED'
+  AlreadyExists = 'ALREADY_EXISTS',
+  Conflict = 'CONFLICT',
+  FailedPrecondition = 'FAILED_PRECONDITION',
+  Forbidden = 'FORBIDDEN',
+  InternalServerError = 'INTERNAL_SERVER_ERROR',
+  InvalidArgument = 'INVALID_ARGUMENT',
+  NotFound = 'NOT_FOUND',
+  Unauthenticated = 'UNAUTHENTICATED',
+  Unauthorized = 'UNAUTHORIZED'
 }
+
+/** Representation of a Session */
+export type Session = {
+  description: Maybe<Scalars['String']['output']>;
+  endTimestamp: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  speakers: Array<Speaker>;
+  startTimestamp: Scalars['DateTime']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type SessionSearch = {
+  description: InputMaybe<Scalars['String']['input']>;
+  endDate: InputMaybe<Scalars['String']['input']>;
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+  sessionIds: InputMaybe<Array<Scalars['String']['input']>>;
+  speakerIds: InputMaybe<Array<Scalars['String']['input']>>;
+  startDate: InputMaybe<Scalars['String']['input']>;
+  title: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Representation of a Speaker */
+export type Speaker = {
+  avatar: Maybe<Scalars['String']['output']>;
+  bio: Maybe<Scalars['String']['output']>;
+  company: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  rol: Maybe<Scalars['String']['output']>;
+  sessions: Array<Session>;
+  socials: Array<Scalars['String']['output']>;
+};
 
 /** Representation of a tag. Tags can be associated to many things. An event, a community, etc. */
 export type Tag = {
   description: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   name: Maybe<Scalars['String']['output']>;
   slug: Scalars['String']['output'];
 };
@@ -664,12 +1002,45 @@ export type TagSearchInput = {
   name: InputMaybe<Scalars['String']['input']>;
 };
 
+export type TeamCreateInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  eventId: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+/** Representation of a team. This is compsed of a group of users and is attached to a specific event */
+export type TeamRef = {
+  description: Maybe<Scalars['String']['output']>;
+  event: Event;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  status: TeamStatus;
+  users: Array<UserWithStatusRef>;
+};
+
+export type TeamSearchValues = {
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+  name: InputMaybe<Scalars['String']['input']>;
+  status: InputMaybe<Array<TeamStatus>>;
+  teamIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userIds: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export enum TeamStatus {
+  Accepted = 'accepted',
+  Invited = 'invited',
+  NotAccepted = 'not_accepted',
+  WaitingResolution = 'waiting_resolution'
+}
+
 /** Representation of a ticket */
 export type Ticket = {
   description: Maybe<Scalars['String']['output']>;
   endDateTime: Maybe<Scalars['DateTime']['output']>;
   event: Event;
+  externalLink: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  imageLink: Maybe<Scalars['String']['output']>;
   /** Whether or not the ticket is free */
   isFree: Scalars['Boolean']['output'];
   /** Whether or not the ticket has an unlimited quantity. This is reserved for things loike online events. */
@@ -678,15 +1049,19 @@ export type Ticket = {
   prices: Maybe<Array<Price>>;
   /** The number of tickets available for this ticket type */
   quantity: Maybe<Scalars['Int']['output']>;
+  quantityLeft: Maybe<Scalars['Int']['output']>;
   requiresApproval: Scalars['Boolean']['output'];
   startDateTime: Scalars['DateTime']['output'];
   status: TicketTemplateStatus;
+  tags: Array<Scalars['String']['output']>;
   visibility: TicketTemplateVisibility;
 };
 
 export enum TicketApprovalStatus {
   Approved = 'approved',
   Cancelled = 'cancelled',
+  GiftAccepted = 'gift_accepted',
+  Gifted = 'gifted',
   NotRequired = 'not_required',
   Pending = 'pending',
   Rejected = 'rejected'
@@ -695,8 +1070,6 @@ export enum TicketApprovalStatus {
 export type TicketClaimInput = {
   /** If this field is passed, a purchase order payment link will be generated right away */
   generatePaymentLink: InputMaybe<GeneratePaymentLinkInput>;
-  /** A unique key to prevent duplicate requests, it's optional to send, but it's recommended to send it to prevent duplicate requests. If not sent, it will be created by the server. */
-  idempotencyUUIDKey: InputMaybe<Scalars['String']['input']>;
   purchaseOrder: Array<PurchaseOrderInput>;
 };
 
@@ -704,14 +1077,18 @@ export type TicketCreateInput = {
   description: InputMaybe<Scalars['String']['input']>;
   endDateTime: InputMaybe<Scalars['DateTime']['input']>;
   eventId: Scalars['String']['input'];
+  externalLink: InputMaybe<Scalars['String']['input']>;
+  imageLink: InputMaybe<Scalars['String']['input']>;
   /** If the ticket is free, the price submitted will be ignored. */
   isFree: Scalars['Boolean']['input'];
+  maxTicketsPerUser: InputMaybe<Scalars['Int']['input']>;
   name: Scalars['String']['input'];
   prices: InputMaybe<Array<PricingInputField>>;
   quantity: InputMaybe<Scalars['Int']['input']>;
   requiresApproval: InputMaybe<Scalars['Boolean']['input']>;
   startDateTime: Scalars['DateTime']['input'];
   status: InputMaybe<TicketTemplateStatus>;
+  tags: InputMaybe<Array<Scalars['String']['input']>>;
   /** If provided, quantity must not be passed. This is for things like online events where there is no limit to the amount of tickets that can be sold. */
   unlimitedTickets: Scalars['Boolean']['input'];
   visibility: InputMaybe<TicketTemplateVisibility>;
@@ -722,7 +1099,7 @@ export type TicketEditInput = {
   endDateTime: InputMaybe<Scalars['DateTime']['input']>;
   eventId: InputMaybe<Scalars['String']['input']>;
   name: InputMaybe<Scalars['String']['input']>;
-  prices: InputMaybe<PricingInputField>;
+  prices: InputMaybe<Array<PricingInputField>>;
   quantity: InputMaybe<Scalars['Int']['input']>;
   requiresApproval: InputMaybe<Scalars['Boolean']['input']>;
   startDateTime: InputMaybe<Scalars['DateTime']['input']>;
@@ -792,27 +1169,80 @@ export type UpdateSalaryInput = {
   yearsOfExperience: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type UpdateTeamInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  teamId: Scalars['String']['input'];
+};
+
 /** Representation of a user */
 export type User = {
   bio: Maybe<Scalars['String']['output']>;
   communities: Array<Community>;
   email: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   imageUrl: Maybe<Scalars['String']['output']>;
+  impersonatedUser: Maybe<User>;
   isSuperAdmin: Maybe<Scalars['Boolean']['output']>;
   lastName: Maybe<Scalars['String']['output']>;
   name: Maybe<Scalars['String']['output']>;
+  pronouns: Maybe<PronounsEnum>;
+  /** Get a list of user's RSVPs */
+  rsvps: Array<UserTicket>;
+  teams: Array<TeamRef>;
+  userData: Maybe<UserData>;
   username: Scalars['String']['output'];
 };
+
+
+/** Representation of a user */
+export type UserRsvpsArgs = {
+  input: InputMaybe<RsvpFilterInput>;
+};
+
+/** Representation of a user's data */
+export type UserData = {
+  city: Scalars['String']['output'];
+  countryOfResidence: Scalars['String']['output'];
+  emergencyPhoneNumber: Maybe<Scalars['String']['output']>;
+  foodAllergies: Maybe<Scalars['String']['output']>;
+  organizationName: Maybe<Scalars['String']['output']>;
+  roleInOrganization: Maybe<Scalars['String']['output']>;
+  rut: Maybe<Scalars['String']['output']>;
+  worksInOrganization: Scalars['Boolean']['output'];
+};
+
+export type UserSearchValues = {
+  name: InputMaybe<Scalars['String']['input']>;
+  tags: InputMaybe<Array<SearchableUserTags>>;
+  userIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userName: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum UserTeamRole {
+  Leader = 'leader',
+  Member = 'member'
+}
 
 /** Representation of a User ticket */
 export type UserTicket = {
   approvalStatus: TicketApprovalStatus;
+  createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  paymentStatus: TicketPaymentStatus;
+  paymentStatus: Maybe<PurchaseOrderPaymentStatusEnum>;
+  publicId: Scalars['String']['output'];
   purchaseOrder: Maybe<PurchaseOrder>;
   redemptionStatus: TicketRedemptionStatus;
   ticketTemplate: Ticket;
+  user: Maybe<User>;
+};
+
+/** Representation of a user in a team */
+export type UserWithStatusRef = {
+  id: Scalars['ID']['output'];
+  role: UserTeamRole;
+  status: ParticipationStatus;
+  user: User;
 };
 
 export enum ValidPaymentMethods {
@@ -824,15 +1254,29 @@ export enum ValidPaymentMethods {
 export type ValidatedWorkEmail = {
   company: Maybe<Company>;
   confirmationDate: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   isValidated: Scalars['Boolean']['output'];
   status: EmailStatus;
   workEmail: Scalars['String']['output'];
 };
 
+/** Representation of a waitlist */
+export type Waitlist = {
+  /** The ID of the waitlist. It matches the ID of the underlying ticket */
+  id: Scalars['ID']['output'];
+  myRsvp: Maybe<UserTicket>;
+  ticket: Ticket;
+};
+
+export enum WaitlistApprovalStatus {
+  Approved = 'approved',
+  Pending = 'pending',
+  Rejected = 'rejected'
+}
+
 /** Representation of a (yet to validate) work email */
 export type WorkEmail = {
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   isValidated: Scalars['Boolean']['output'];
 };
 
@@ -845,7 +1289,7 @@ export enum WorkMetodology {
 /** Representation of a work role */
 export type WorkRole = {
   description: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   seniorities: Array<WorkSeniority>;
 };
@@ -857,8 +1301,32 @@ export type WorkRoleSenioritiesInput = {
 /** Representation of a work seniority */
 export type WorkSeniority = {
   description: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+};
+
+export type PlaceHolderUsersInput = {
+  ciudad: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  emergencyPhoneNumber: InputMaybe<Scalars['String']['input']>;
+  foodAllergies: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  nombreOrganizacion: InputMaybe<Scalars['String']['input']>;
+  pais: InputMaybe<Scalars['String']['input']>;
+  rolEnOrganizacion: InputMaybe<Scalars['String']['input']>;
+  trabajasEnOrganizacion: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateUserDataInput = {
+  city: Scalars['String']['input'];
+  countryOfResidence: Scalars['String']['input'];
+  emergencyPhoneNumber: InputMaybe<Scalars['String']['input']>;
+  eventId: Scalars['String']['input'];
+  foodAllergies: InputMaybe<Scalars['String']['input']>;
+  organizationName: InputMaybe<Scalars['String']['input']>;
+  roleInOrganization: InputMaybe<Scalars['String']['input']>;
+  rut: InputMaybe<Scalars['String']['input']>;
+  worksInOrganization: Scalars['Boolean']['input'];
 };
 
 export type UpdateUserRoleInCommunityInput = {
@@ -872,94 +1340,67 @@ export type UserEditInput = {
   id: Scalars['String']['input'];
   lastName: InputMaybe<Scalars['String']['input']>;
   name: InputMaybe<Scalars['String']['input']>;
+  pronouns: InputMaybe<PronounsEnum>;
   username: InputMaybe<Scalars['String']['input']>;
 };
 
-export type UserSearchInput = {
-  tags: InputMaybe<Array<SearchableUserTags>>;
-};
-
-export type ImportGoogleAlbumMutationVariables = Exact<{
-  input: EnqueueGoogleAlbumImportInput;
+export type SearchEventsQueryVariables = Exact<{
+  input: PaginatedInputEventsSearchInput;
 }>;
 
 
-export type ImportGoogleAlbumMutation = { enqueueGoogleAlbumImport: boolean };
-
-export type IsSuperAdminQueryVariables = Exact<{ [key: string]: never; }>;
+export type SearchEventsQuery = { searchEvents: { data: Array<{ id: string, name: string, galleries: Array<{ id: string, description: string | null, images: Array<{ id: string, hosting: ImageHostingEnum, url: string }> }> }> } };
 
 
-export type IsSuperAdminQuery = { me: { id: string, isSuperAdmin: boolean | null } };
-
-
-export const ImportGoogleAlbumDocument = gql`
-    mutation importGoogleAlbum($input: EnqueueGoogleAlbumImportInput!) {
-  enqueueGoogleAlbumImport(input: $input)
-}
-    `;
-export type ImportGoogleAlbumMutationFn = Apollo.MutationFunction<ImportGoogleAlbumMutation, ImportGoogleAlbumMutationVariables>;
-
-/**
- * __useImportGoogleAlbumMutation__
- *
- * To run a mutation, you first call `useImportGoogleAlbumMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useImportGoogleAlbumMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [importGoogleAlbumMutation, { data, loading, error }] = useImportGoogleAlbumMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useImportGoogleAlbumMutation(baseOptions?: Apollo.MutationHookOptions<ImportGoogleAlbumMutation, ImportGoogleAlbumMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ImportGoogleAlbumMutation, ImportGoogleAlbumMutationVariables>(ImportGoogleAlbumDocument, options);
+export const SearchEventsDocument = gql`
+    query searchEvents($input: PaginatedInputEventsSearchInput!) {
+  searchEvents(input: $input) {
+    data {
+      id
+      name
+      galleries {
+        id
+        description
+        images {
+          id
+          hosting
+          url
+        }
       }
-export type ImportGoogleAlbumMutationHookResult = ReturnType<typeof useImportGoogleAlbumMutation>;
-export type ImportGoogleAlbumMutationResult = Apollo.MutationResult<ImportGoogleAlbumMutation>;
-export type ImportGoogleAlbumMutationOptions = Apollo.BaseMutationOptions<ImportGoogleAlbumMutation, ImportGoogleAlbumMutationVariables>;
-export const IsSuperAdminDocument = gql`
-    query isSuperAdmin {
-  me {
-    id
-    isSuperAdmin
+    }
   }
 }
     `;
 
 /**
- * __useIsSuperAdminQuery__
+ * __useSearchEventsQuery__
  *
- * To run a query within a React component, call `useIsSuperAdminQuery` and pass it any options that fit your needs.
- * When your component renders, `useIsSuperAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSearchEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useIsSuperAdminQuery({
+ * const { data, loading, error } = useSearchEventsQuery({
  *   variables: {
+ *      input: // value for 'input'
  *   },
  * });
  */
-export function useIsSuperAdminQuery(baseOptions?: Apollo.QueryHookOptions<IsSuperAdminQuery, IsSuperAdminQueryVariables>) {
+export function useSearchEventsQuery(baseOptions: Apollo.QueryHookOptions<SearchEventsQuery, SearchEventsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<IsSuperAdminQuery, IsSuperAdminQueryVariables>(IsSuperAdminDocument, options);
+        return Apollo.useQuery<SearchEventsQuery, SearchEventsQueryVariables>(SearchEventsDocument, options);
       }
-export function useIsSuperAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<IsSuperAdminQuery, IsSuperAdminQueryVariables>) {
+export function useSearchEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchEventsQuery, SearchEventsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<IsSuperAdminQuery, IsSuperAdminQueryVariables>(IsSuperAdminDocument, options);
+          return Apollo.useLazyQuery<SearchEventsQuery, SearchEventsQueryVariables>(SearchEventsDocument, options);
         }
-export function useIsSuperAdminSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<IsSuperAdminQuery, IsSuperAdminQueryVariables>) {
+export function useSearchEventsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchEventsQuery, SearchEventsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<IsSuperAdminQuery, IsSuperAdminQueryVariables>(IsSuperAdminDocument, options);
+          return Apollo.useSuspenseQuery<SearchEventsQuery, SearchEventsQueryVariables>(SearchEventsDocument, options);
         }
-export type IsSuperAdminQueryHookResult = ReturnType<typeof useIsSuperAdminQuery>;
-export type IsSuperAdminLazyQueryHookResult = ReturnType<typeof useIsSuperAdminLazyQuery>;
-export type IsSuperAdminSuspenseQueryHookResult = ReturnType<typeof useIsSuperAdminSuspenseQuery>;
-export type IsSuperAdminQueryResult = Apollo.QueryResult<IsSuperAdminQuery, IsSuperAdminQueryVariables>;
+export type SearchEventsQueryHookResult = ReturnType<typeof useSearchEventsQuery>;
+export type SearchEventsLazyQueryHookResult = ReturnType<typeof useSearchEventsLazyQuery>;
+export type SearchEventsSuspenseQueryHookResult = ReturnType<typeof useSearchEventsSuspenseQuery>;
+export type SearchEventsQueryResult = Apollo.QueryResult<SearchEventsQuery, SearchEventsQueryVariables>;

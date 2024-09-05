@@ -11,10 +11,10 @@ export const Footer = () => {
         <p>
           Conviértete en auspiciador en{" "}
           <a
-            href="https://donaciones.jschile.org"
-            className="font-bold text-jsconf-yellow hover:text-white font-koulen"
+            href="https://communityos.io/ser-sponsor/"
+            className="font-bold text-brand-primary hover:text-white"
           >
-            donaciones.jschile.org
+            communityos.io/ser-sponsor/
           </a>
         </p>
       </div>

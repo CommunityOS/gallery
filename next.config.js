@@ -1,9 +1,10 @@
+const withExportImages = require("next-export-optimize-images");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    formats: ["image/avif", "image/webp"],
     remotePatterns: [
-      { hostname: "imagedelivery.net/dqFoxiedZNoncKJ9uqxz0g" },
+      { hostname: "imagedelivery.net" },
       { hostname: "images.jsconf.cl" },
       { hostname: "cdn.sanity.io" },
     ],
@@ -12,6 +13,7 @@ const nextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
+  output: "export",
 };
 
-module.exports = nextConfig;
+module.exports = withExportImages(nextConfig);

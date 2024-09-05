@@ -1,0 +1,10 @@
+name = "gallery-site"
+compatibility_date = "2024-06-11"
+compatibility_flags = ["nodejs_compat"]
+
+########################## 🚀 ENTORNO DE PRODUCCIÓN 🚀 #########################
+
+[env.production]
+
+[env.production.placement]
+mode = "smart"

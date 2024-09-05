@@ -1,11 +1,5 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
-import {
-  localSchema,
-  sanityURL,
-  jsChileURL,
-  sanityDocuments,
-  apiDocuments,
-} from "./graphql.config";
+import { jsChileURL, apiDocuments } from "./graphql.config";
 
 const noTypeCheckingPlugin = {
   add: {
@@ -22,8 +16,8 @@ const config = {
   ignoreNoDocuments: true,
   generates: {
     "./src/gql/": {
-      schema: [sanityURL],
-      documents: sanityDocuments,
+      schema: [jsChileURL],
+      documents: apiDocuments,
       preset: "client",
       config: {
         useTypeImports: true,
@@ -40,14 +34,9 @@ const config = {
         },
       },
     },
-    "./src/gql/schema.gql": {
-      schema: [sanityURL, localSchema],
-      documents: sanityDocuments,
-      plugins: ["schema-ast"],
-    },
     "./src/gql/graphqlRequest.ts": {
-      schema: [sanityURL, localSchema],
-      documents: sanityDocuments,
+      schema: [jsChileURL],
+      documents: apiDocuments,
       plugins: ["typescript-graphql-request", noTypeCheckingPlugin],
       config: {
         documentMode: "external",

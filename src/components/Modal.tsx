@@ -1,10 +1,11 @@
 "use client";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, Suspense, useEffect, useRef, useState } from "react";
 import useKeypress from "react-use-keypress";
-import { EventImagesQuery } from "../gql/graphql";
 import SharedModal from "./SharedModal";
+import { SearchEventsQuery } from "@/gql/graphql";
 
 const InternalModal = ({
   images,
@@ -12,13 +13,15 @@ const InternalModal = ({
   eventId,
   photoId,
 }: {
-  images: (EventImagesQuery["allEventImage"][number] & { index: number })[];
+  images: (SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0] & {
+    index: number;
+  })[];
   handleClose: () => void;
   eventId: string;
   photoId: string;
 }) => {
   const router = useRouter();
-  let index = Number(images.findIndex((el) => el._id === photoId));
+  let index = Number(images.findIndex((el) => el.id === photoId));
 
   const [direction, setDirection] = useState(0);
   const [curIndex, setCurIndex] = useState(index);
@@ -30,7 +33,7 @@ const InternalModal = ({
       setDirection(-1);
     }
     setCurIndex(newVal);
-    router.push(`/event/${eventId}?photoId=${images[newVal]._id}`, {
+    router.push(`/event/${eventId}?photoId=${images[newVal].id}`, {
       scroll: false,
     });
   }
@@ -54,15 +57,19 @@ const InternalModal = ({
       changePhotoId={changePhotoId}
       closeModal={handleClose}
       navigation={true}
+      galleryId={eventId}
     />
   );
 };
-export default function Modal({
+
+function Modal({
   images,
   eventId,
   forcedPhotoId,
 }: {
-  images: (EventImagesQuery["allEventImage"][number] & { index: number })[];
+  images: (SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0] & {
+    index: number;
+  })[];
   eventId: string;
   forcedPhotoId?: string;
 }) {
@@ -72,7 +79,8 @@ export default function Modal({
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   function handleClose() {
-    router.push(`/event/${eventId}`, { scroll: false });
+    setIsOpen(false);
+    router.push(`/event/${eventId}`);
   }
 
   useEffect(() => {
@@ -121,5 +129,23 @@ export default function Modal({
         </Transition.Child>
       </Dialog>
     </Transition>
+  );
+}
+
+export default function ModalSSR({
+  images,
+  eventId,
+  forcedPhotoId,
+}: {
+  images: (SearchEventsQuery["searchEvents"]["data"][0]["galleries"][0]["images"][0] & {
+    index: number;
+  })[];
+  eventId: string;
+  forcedPhotoId?: string;
+}) {
+  return (
+    <Suspense>
+      <Modal images={images} eventId={eventId} forcedPhotoId={forcedPhotoId} />
+    </Suspense>
   );
 }

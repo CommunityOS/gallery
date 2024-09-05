@@ -20,1032 +20,1333 @@ export type Scalars = {
   DateTime: { input: string; output: string; }
 };
 
-export type Block = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  children: Maybe<Array<Maybe<Span>>>;
-  list: Maybe<Scalars['String']['output']>;
-  style: Maybe<Scalars['String']['output']>;
+export type AcceptTeamInvitationInput = {
+  teamId: Scalars['String']['input'];
 };
 
-export type BooleanFilter = {
-  /** Checks if the value is equal to the given input. */
-  eq: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks if the value is defined. */
-  is_defined: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks if the value is not equal to the given input. */
-  neq: InputMaybe<Scalars['Boolean']['input']>;
+export type AddPersonToTeamInput = {
+  teamId: Scalars['String']['input'];
+  userEmail: Scalars['String']['input'];
 };
 
-export type CrossDatasetReference = {
-  _dataset: Maybe<Scalars['String']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  _projectId: Maybe<Scalars['String']['output']>;
-  _ref: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  _weak: Maybe<Scalars['Boolean']['output']>;
+/** Response when adding a user to a team */
+export type AddUserToTeamResponseRef = {
+  team: TeamRef;
+  userIsInOtherTeams: Scalars['Boolean']['output'];
 };
 
-export type CrossDatasetReferenceFilter = {
-  _dataset: InputMaybe<StringFilter>;
-  _key: InputMaybe<StringFilter>;
-  _projectId: InputMaybe<StringFilter>;
-  _ref: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _weak: InputMaybe<BooleanFilter>;
+/** Representation of a workEmail */
+export type AllowedCurrency = {
+  currency: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  validPaymentMethods: ValidPaymentMethods;
 };
 
-export type CrossDatasetReferenceSorting = {
-  _dataset: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _projectId: InputMaybe<SortOrder>;
-  _ref: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _weak: InputMaybe<SortOrder>;
+export type CheckForPurchaseOrderInput = {
+  purchaseOrderId: Scalars['String']['input'];
 };
 
-export type DateFilter = {
-  /** Checks if the value is equal to the given input. */
-  eq: InputMaybe<Scalars['Date']['input']>;
-  /** Checks if the value is greater than the given input. */
-  gt: InputMaybe<Scalars['Date']['input']>;
-  /** Checks if the value is greater than or equal to the given input. */
-  gte: InputMaybe<Scalars['Date']['input']>;
-  /** Checks if the value is defined. */
-  is_defined: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks if the value is lesser than the given input. */
-  lt: InputMaybe<Scalars['Date']['input']>;
-  /** Checks if the value is lesser than or equal to the given input. */
-  lte: InputMaybe<Scalars['Date']['input']>;
-  /** Checks if the value is not equal to the given input. */
-  neq: InputMaybe<Scalars['Date']['input']>;
-};
-
-export type DatetimeFilter = {
-  /** Checks if the value is equal to the given input. */
-  eq: InputMaybe<Scalars['DateTime']['input']>;
-  /** Checks if the value is greater than the given input. */
-  gt: InputMaybe<Scalars['DateTime']['input']>;
-  /** Checks if the value is greater than or equal to the given input. */
-  gte: InputMaybe<Scalars['DateTime']['input']>;
-  /** Checks if the value is defined. */
-  is_defined: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks if the value is lesser than the given input. */
-  lt: InputMaybe<Scalars['DateTime']['input']>;
-  /** Checks if the value is lesser than or equal to the given input. */
-  lte: InputMaybe<Scalars['DateTime']['input']>;
-  /** Checks if the value is not equal to the given input. */
-  neq: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-/** A Sanity document */
-export type Document = {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type DocumentFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-};
-
-export type DocumentSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-};
-
-export type Donor = Document & {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-  discordUsername: Maybe<Scalars['String']['output']>;
-  githubUsername: Maybe<Scalars['String']['output']>;
-  /** El nombre q se usará en el sitio público para identificar al donante */
-  name: Maybe<Scalars['String']['output']>;
-  profileImage: Maybe<Image>;
-  status: Maybe<Status>;
-};
-
-export type DonorFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _key: InputMaybe<StringFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-  discordUsername: InputMaybe<StringFilter>;
-  githubUsername: InputMaybe<StringFilter>;
-  name: InputMaybe<StringFilter>;
-  profileImage: InputMaybe<ImageFilter>;
-  status: InputMaybe<StatusFilter>;
-};
-
-export type DonorSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-  discordUsername: InputMaybe<SortOrder>;
-  githubUsername: InputMaybe<SortOrder>;
-  name: InputMaybe<SortOrder>;
-  profileImage: InputMaybe<ImageSorting>;
-};
-
-export type Event = Document & {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-  bgColor: Maybe<Scalars['String']['output']>;
-  endDate: Maybe<Scalars['Date']['output']>;
-  /** Habilita este evento para aparecer en la galería de imágenes */
-  galleryEnabled: Maybe<Scalars['Boolean']['output']>;
-  image: Maybe<Image>;
-  mergedTitle: Maybe<Scalars['Boolean']['output']>;
-  project: Maybe<Project>;
-  startDate: Maybe<Scalars['Date']['output']>;
-  title: Maybe<Scalars['String']['output']>;
-  url: Maybe<Scalars['String']['output']>;
-};
-
-export type EventFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _key: InputMaybe<StringFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-  bgColor: InputMaybe<StringFilter>;
-  endDate: InputMaybe<DateFilter>;
-  galleryEnabled: InputMaybe<BooleanFilter>;
-  image: InputMaybe<ImageFilter>;
-  mergedTitle: InputMaybe<BooleanFilter>;
-  project: InputMaybe<ProjectFilter>;
-  startDate: InputMaybe<DateFilter>;
-  title: InputMaybe<StringFilter>;
-  url: InputMaybe<StringFilter>;
-};
-
-export type EventImage = Document & {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-  event: Maybe<Event>;
-  externalId: Maybe<Scalars['String']['output']>;
-  externalURL: Maybe<Scalars['String']['output']>;
-  /** Habilita esta imagen para aparecer en la galería de imágenes */
-  galleryEnabled: Maybe<Scalars['Boolean']['output']>;
-  image: Maybe<Image>;
-  title: Maybe<Scalars['String']['output']>;
-  url: Maybe<Scalars['String']['output']>;
-};
-
-export type EventImageFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _key: InputMaybe<StringFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-  event: InputMaybe<EventFilter>;
-  externalId: InputMaybe<StringFilter>;
-  externalURL: InputMaybe<StringFilter>;
-  galleryEnabled: InputMaybe<BooleanFilter>;
-  image: InputMaybe<ImageFilter>;
-  title: InputMaybe<StringFilter>;
-  url: InputMaybe<StringFilter>;
-};
-
-export type EventImageSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-  externalId: InputMaybe<SortOrder>;
-  externalURL: InputMaybe<SortOrder>;
-  galleryEnabled: InputMaybe<SortOrder>;
-  image: InputMaybe<ImageSorting>;
-  title: InputMaybe<SortOrder>;
-  url: InputMaybe<SortOrder>;
-};
-
-export type EventSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-  bgColor: InputMaybe<SortOrder>;
-  endDate: InputMaybe<SortOrder>;
-  galleryEnabled: InputMaybe<SortOrder>;
-  image: InputMaybe<ImageSorting>;
-  mergedTitle: InputMaybe<SortOrder>;
-  startDate: InputMaybe<SortOrder>;
-  title: InputMaybe<SortOrder>;
-  url: InputMaybe<SortOrder>;
-};
-
-export type File = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  asset: Maybe<SanityFileAsset>;
-};
-
-export type FileFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  asset: InputMaybe<SanityFileAssetFilter>;
-};
-
-export type FileSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-};
-
-export type FloatFilter = {
-  /** Checks if the value is equal to the given input. */
-  eq: InputMaybe<Scalars['Float']['input']>;
-  /** Checks if the value is greater than the given input. */
-  gt: InputMaybe<Scalars['Float']['input']>;
-  /** Checks if the value is greater than or equal to the given input. */
-  gte: InputMaybe<Scalars['Float']['input']>;
-  /** Checks if the value is defined. */
-  is_defined: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks if the value is lesser than the given input. */
-  lt: InputMaybe<Scalars['Float']['input']>;
-  /** Checks if the value is lesser than or equal to the given input. */
-  lte: InputMaybe<Scalars['Float']['input']>;
-  /** Checks if the value is not equal to the given input. */
-  neq: InputMaybe<Scalars['Float']['input']>;
-};
-
-export type Geopoint = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  alt: Maybe<Scalars['Float']['output']>;
-  lat: Maybe<Scalars['Float']['output']>;
-  lng: Maybe<Scalars['Float']['output']>;
-};
-
-export type GeopointFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  alt: InputMaybe<FloatFilter>;
-  lat: InputMaybe<FloatFilter>;
-  lng: InputMaybe<FloatFilter>;
-};
-
-export type GeopointSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  alt: InputMaybe<SortOrder>;
-  lat: InputMaybe<SortOrder>;
-  lng: InputMaybe<SortOrder>;
-};
-
-export type IdFilter = {
-  /** Checks if the value is equal to the given input. */
-  eq: InputMaybe<Scalars['ID']['input']>;
-  in: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** Checks if the value matches the given word/words. */
-  matches: InputMaybe<Scalars['ID']['input']>;
-  /** Checks if the value is not equal to the given input. */
-  neq: InputMaybe<Scalars['ID']['input']>;
-  nin: InputMaybe<Array<Scalars['ID']['input']>>;
-};
-
-export type Image = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  asset: Maybe<SanityImageAsset>;
-  crop: Maybe<SanityImageCrop>;
-  hotspot: Maybe<SanityImageHotspot>;
-};
-
-export type ImageFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  asset: InputMaybe<SanityImageAssetFilter>;
-  crop: InputMaybe<SanityImageCropFilter>;
-  hotspot: InputMaybe<SanityImageHotspotFilter>;
-};
-
-export type ImageSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  crop: InputMaybe<SanityImageCropSorting>;
-  hotspot: InputMaybe<SanityImageHotspotSorting>;
-};
-
-export type IntFilter = {
-  /** Checks if the value is equal to the given input. */
-  eq: InputMaybe<Scalars['Int']['input']>;
-  /** Checks if the value is greater than the given input. */
-  gt: InputMaybe<Scalars['Int']['input']>;
-  /** Checks if the value is greater than or equal to the given input. */
-  gte: InputMaybe<Scalars['Int']['input']>;
-  /** Checks if the value is defined. */
-  is_defined: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks if the value is lesser than the given input. */
-  lt: InputMaybe<Scalars['Int']['input']>;
-  /** Checks if the value is lesser than or equal to the given input. */
-  lte: InputMaybe<Scalars['Int']['input']>;
-  /** Checks if the value is not equal to the given input. */
-  neq: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type Project = Document & {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-  bgColor: Maybe<Scalars['String']['output']>;
-  image: Maybe<Image>;
-  title: Maybe<Scalars['String']['output']>;
-};
-
-export type ProjectFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _key: InputMaybe<StringFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-  bgColor: InputMaybe<StringFilter>;
-  image: InputMaybe<ImageFilter>;
-  title: InputMaybe<StringFilter>;
-};
-
-export type ProjectSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-  bgColor: InputMaybe<SortOrder>;
-  image: InputMaybe<ImageSorting>;
-  title: InputMaybe<SortOrder>;
-};
-
-export type RootQuery = {
-  Document: Maybe<Document>;
-  Donor: Maybe<Donor>;
-  Event: Maybe<Event>;
-  EventImage: Maybe<EventImage>;
-  Project: Maybe<Project>;
-  SanityFileAsset: Maybe<SanityFileAsset>;
-  SanityImageAsset: Maybe<SanityImageAsset>;
-  Status: Maybe<Status>;
-  allDocument: Array<Document>;
-  allDonor: Array<Donor>;
-  allEvent: Array<Event>;
-  allEventImage: Array<EventImage>;
-  allProject: Array<Project>;
-  allSanityFileAsset: Array<SanityFileAsset>;
-  allSanityImageAsset: Array<SanityImageAsset>;
-  allStatus: Array<Status>;
-};
-
-
-export type RootQueryDocumentArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQueryDonorArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQueryEventArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQueryEventImageArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQueryProjectArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQuerySanityFileAssetArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQuerySanityImageAssetArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQueryStatusArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type RootQueryAllDocumentArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<DocumentSorting>>;
-  where: InputMaybe<DocumentFilter>;
-};
-
-
-export type RootQueryAllDonorArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<DonorSorting>>;
-  where: InputMaybe<DonorFilter>;
-};
-
-
-export type RootQueryAllEventArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<EventSorting>>;
-  where: InputMaybe<EventFilter>;
-};
-
-
-export type RootQueryAllEventImageArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<EventImageSorting>>;
-  where: InputMaybe<EventImageFilter>;
-};
-
-
-export type RootQueryAllProjectArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<ProjectSorting>>;
-  where: InputMaybe<ProjectFilter>;
-};
-
-
-export type RootQueryAllSanityFileAssetArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<SanityFileAssetSorting>>;
-  where: InputMaybe<SanityFileAssetFilter>;
-};
-
-
-export type RootQueryAllSanityImageAssetArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<SanityImageAssetSorting>>;
-  where: InputMaybe<SanityImageAssetFilter>;
-};
-
-
-export type RootQueryAllStatusArgs = {
-  limit: InputMaybe<Scalars['Int']['input']>;
-  offset: InputMaybe<Scalars['Int']['input']>;
-  sort: InputMaybe<Array<StatusSorting>>;
-  where: InputMaybe<StatusFilter>;
-};
-
-export type SanityAssetSourceData = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  /** The unique ID for the asset within the originating source so you can programatically find back to it */
-  id: Maybe<Scalars['String']['output']>;
-  /** A canonical name for the source this asset is originating from */
-  name: Maybe<Scalars['String']['output']>;
-  /** A URL to find more information about this asset in the originating source */
-  url: Maybe<Scalars['String']['output']>;
-};
-
-export type SanityAssetSourceDataFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  id: InputMaybe<StringFilter>;
-  name: InputMaybe<StringFilter>;
-  url: InputMaybe<StringFilter>;
-};
-
-export type SanityAssetSourceDataSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  id: InputMaybe<SortOrder>;
-  name: InputMaybe<SortOrder>;
-  url: InputMaybe<SortOrder>;
-};
-
-export type SanityFileAsset = Document & {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-  altText: Maybe<Scalars['String']['output']>;
-  assetId: Maybe<Scalars['String']['output']>;
-  description: Maybe<Scalars['String']['output']>;
-  extension: Maybe<Scalars['String']['output']>;
-  label: Maybe<Scalars['String']['output']>;
-  mimeType: Maybe<Scalars['String']['output']>;
-  originalFilename: Maybe<Scalars['String']['output']>;
-  path: Maybe<Scalars['String']['output']>;
-  sha1hash: Maybe<Scalars['String']['output']>;
-  size: Maybe<Scalars['Float']['output']>;
-  source: Maybe<SanityAssetSourceData>;
-  title: Maybe<Scalars['String']['output']>;
-  url: Maybe<Scalars['String']['output']>;
-};
-
-export type SanityFileAssetFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _key: InputMaybe<StringFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-  altText: InputMaybe<StringFilter>;
-  assetId: InputMaybe<StringFilter>;
-  description: InputMaybe<StringFilter>;
-  extension: InputMaybe<StringFilter>;
-  label: InputMaybe<StringFilter>;
-  mimeType: InputMaybe<StringFilter>;
-  originalFilename: InputMaybe<StringFilter>;
-  path: InputMaybe<StringFilter>;
-  sha1hash: InputMaybe<StringFilter>;
-  size: InputMaybe<FloatFilter>;
-  source: InputMaybe<SanityAssetSourceDataFilter>;
-  title: InputMaybe<StringFilter>;
-  url: InputMaybe<StringFilter>;
-};
-
-export type SanityFileAssetSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-  altText: InputMaybe<SortOrder>;
-  assetId: InputMaybe<SortOrder>;
-  description: InputMaybe<SortOrder>;
-  extension: InputMaybe<SortOrder>;
-  label: InputMaybe<SortOrder>;
-  mimeType: InputMaybe<SortOrder>;
-  originalFilename: InputMaybe<SortOrder>;
-  path: InputMaybe<SortOrder>;
-  sha1hash: InputMaybe<SortOrder>;
-  size: InputMaybe<SortOrder>;
-  source: InputMaybe<SanityAssetSourceDataSorting>;
-  title: InputMaybe<SortOrder>;
-  url: InputMaybe<SortOrder>;
-};
-
-export type SanityImageAsset = Document & {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-  altText: Maybe<Scalars['String']['output']>;
-  assetId: Maybe<Scalars['String']['output']>;
-  description: Maybe<Scalars['String']['output']>;
-  extension: Maybe<Scalars['String']['output']>;
-  label: Maybe<Scalars['String']['output']>;
-  metadata: Maybe<SanityImageMetadata>;
-  mimeType: Maybe<Scalars['String']['output']>;
-  originalFilename: Maybe<Scalars['String']['output']>;
-  path: Maybe<Scalars['String']['output']>;
-  sha1hash: Maybe<Scalars['String']['output']>;
-  size: Maybe<Scalars['Float']['output']>;
-  source: Maybe<SanityAssetSourceData>;
-  title: Maybe<Scalars['String']['output']>;
-  uploadId: Maybe<Scalars['String']['output']>;
-  url: Maybe<Scalars['String']['output']>;
-};
-
-export type SanityImageAssetFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _key: InputMaybe<StringFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-  altText: InputMaybe<StringFilter>;
-  assetId: InputMaybe<StringFilter>;
-  description: InputMaybe<StringFilter>;
-  extension: InputMaybe<StringFilter>;
-  label: InputMaybe<StringFilter>;
-  metadata: InputMaybe<SanityImageMetadataFilter>;
-  mimeType: InputMaybe<StringFilter>;
-  originalFilename: InputMaybe<StringFilter>;
-  path: InputMaybe<StringFilter>;
-  sha1hash: InputMaybe<StringFilter>;
-  size: InputMaybe<FloatFilter>;
-  source: InputMaybe<SanityAssetSourceDataFilter>;
-  title: InputMaybe<StringFilter>;
-  uploadId: InputMaybe<StringFilter>;
-  url: InputMaybe<StringFilter>;
-};
-
-export type SanityImageAssetSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-  altText: InputMaybe<SortOrder>;
-  assetId: InputMaybe<SortOrder>;
-  description: InputMaybe<SortOrder>;
-  extension: InputMaybe<SortOrder>;
-  label: InputMaybe<SortOrder>;
-  metadata: InputMaybe<SanityImageMetadataSorting>;
-  mimeType: InputMaybe<SortOrder>;
-  originalFilename: InputMaybe<SortOrder>;
-  path: InputMaybe<SortOrder>;
-  sha1hash: InputMaybe<SortOrder>;
-  size: InputMaybe<SortOrder>;
-  source: InputMaybe<SanityAssetSourceDataSorting>;
-  title: InputMaybe<SortOrder>;
-  uploadId: InputMaybe<SortOrder>;
-  url: InputMaybe<SortOrder>;
-};
-
-export type SanityImageCrop = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  bottom: Maybe<Scalars['Float']['output']>;
-  left: Maybe<Scalars['Float']['output']>;
-  right: Maybe<Scalars['Float']['output']>;
-  top: Maybe<Scalars['Float']['output']>;
-};
-
-export type SanityImageCropFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  bottom: InputMaybe<FloatFilter>;
-  left: InputMaybe<FloatFilter>;
-  right: InputMaybe<FloatFilter>;
-  top: InputMaybe<FloatFilter>;
-};
-
-export type SanityImageCropSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  bottom: InputMaybe<SortOrder>;
-  left: InputMaybe<SortOrder>;
-  right: InputMaybe<SortOrder>;
-  top: InputMaybe<SortOrder>;
-};
-
-export type SanityImageDimensions = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  aspectRatio: Maybe<Scalars['Float']['output']>;
-  height: Maybe<Scalars['Float']['output']>;
-  width: Maybe<Scalars['Float']['output']>;
-};
-
-export type SanityImageDimensionsFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  aspectRatio: InputMaybe<FloatFilter>;
-  height: InputMaybe<FloatFilter>;
-  width: InputMaybe<FloatFilter>;
-};
-
-export type SanityImageDimensionsSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  aspectRatio: InputMaybe<SortOrder>;
-  height: InputMaybe<SortOrder>;
-  width: InputMaybe<SortOrder>;
-};
-
-export type SanityImageHotspot = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  height: Maybe<Scalars['Float']['output']>;
-  width: Maybe<Scalars['Float']['output']>;
-  x: Maybe<Scalars['Float']['output']>;
-  y: Maybe<Scalars['Float']['output']>;
-};
-
-export type SanityImageHotspotFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  height: InputMaybe<FloatFilter>;
-  width: InputMaybe<FloatFilter>;
-  x: InputMaybe<FloatFilter>;
-  y: InputMaybe<FloatFilter>;
-};
-
-export type SanityImageHotspotSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  height: InputMaybe<SortOrder>;
-  width: InputMaybe<SortOrder>;
-  x: InputMaybe<SortOrder>;
-  y: InputMaybe<SortOrder>;
-};
-
-export type SanityImageMetadata = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  blurHash: Maybe<Scalars['String']['output']>;
-  dimensions: Maybe<SanityImageDimensions>;
-  hasAlpha: Maybe<Scalars['Boolean']['output']>;
-  isOpaque: Maybe<Scalars['Boolean']['output']>;
-  location: Maybe<Geopoint>;
-  lqip: Maybe<Scalars['String']['output']>;
-  palette: Maybe<SanityImagePalette>;
-};
-
-export type SanityImageMetadataFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  blurHash: InputMaybe<StringFilter>;
-  dimensions: InputMaybe<SanityImageDimensionsFilter>;
-  hasAlpha: InputMaybe<BooleanFilter>;
-  isOpaque: InputMaybe<BooleanFilter>;
-  location: InputMaybe<GeopointFilter>;
-  lqip: InputMaybe<StringFilter>;
-  palette: InputMaybe<SanityImagePaletteFilter>;
-};
-
-export type SanityImageMetadataSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  blurHash: InputMaybe<SortOrder>;
-  dimensions: InputMaybe<SanityImageDimensionsSorting>;
-  hasAlpha: InputMaybe<SortOrder>;
-  isOpaque: InputMaybe<SortOrder>;
-  location: InputMaybe<GeopointSorting>;
-  lqip: InputMaybe<SortOrder>;
-  palette: InputMaybe<SanityImagePaletteSorting>;
-};
-
-export type SanityImagePalette = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  darkMuted: Maybe<SanityImagePaletteSwatch>;
-  darkVibrant: Maybe<SanityImagePaletteSwatch>;
-  dominant: Maybe<SanityImagePaletteSwatch>;
-  lightMuted: Maybe<SanityImagePaletteSwatch>;
-  lightVibrant: Maybe<SanityImagePaletteSwatch>;
-  muted: Maybe<SanityImagePaletteSwatch>;
-  vibrant: Maybe<SanityImagePaletteSwatch>;
-};
-
-export type SanityImagePaletteFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  darkMuted: InputMaybe<SanityImagePaletteSwatchFilter>;
-  darkVibrant: InputMaybe<SanityImagePaletteSwatchFilter>;
-  dominant: InputMaybe<SanityImagePaletteSwatchFilter>;
-  lightMuted: InputMaybe<SanityImagePaletteSwatchFilter>;
-  lightVibrant: InputMaybe<SanityImagePaletteSwatchFilter>;
-  muted: InputMaybe<SanityImagePaletteSwatchFilter>;
-  vibrant: InputMaybe<SanityImagePaletteSwatchFilter>;
-};
-
-export type SanityImagePaletteSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  darkMuted: InputMaybe<SanityImagePaletteSwatchSorting>;
-  darkVibrant: InputMaybe<SanityImagePaletteSwatchSorting>;
-  dominant: InputMaybe<SanityImagePaletteSwatchSorting>;
-  lightMuted: InputMaybe<SanityImagePaletteSwatchSorting>;
-  lightVibrant: InputMaybe<SanityImagePaletteSwatchSorting>;
-  muted: InputMaybe<SanityImagePaletteSwatchSorting>;
-  vibrant: InputMaybe<SanityImagePaletteSwatchSorting>;
-};
-
-export type SanityImagePaletteSwatch = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  background: Maybe<Scalars['String']['output']>;
-  foreground: Maybe<Scalars['String']['output']>;
-  population: Maybe<Scalars['Float']['output']>;
-  title: Maybe<Scalars['String']['output']>;
-};
-
-export type SanityImagePaletteSwatchFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  background: InputMaybe<StringFilter>;
-  foreground: InputMaybe<StringFilter>;
-  population: InputMaybe<FloatFilter>;
-  title: InputMaybe<StringFilter>;
-};
-
-export type SanityImagePaletteSwatchSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  background: InputMaybe<SortOrder>;
-  foreground: InputMaybe<SortOrder>;
-  population: InputMaybe<SortOrder>;
-  title: InputMaybe<SortOrder>;
-};
-
-export type Sanity_DocumentFilter = {
-  /** All documents that are drafts. */
-  is_draft: InputMaybe<Scalars['Boolean']['input']>;
-  /** All documents referencing the given document ID. */
-  references: InputMaybe<Scalars['ID']['input']>;
-};
-
-export type Slug = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  current: Maybe<Scalars['String']['output']>;
-  source: Maybe<Scalars['String']['output']>;
-};
-
-export type SlugFilter = {
-  _key: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  current: InputMaybe<StringFilter>;
-  source: InputMaybe<StringFilter>;
-};
-
-export type SlugSorting = {
-  _key: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  current: InputMaybe<SortOrder>;
-  source: InputMaybe<SortOrder>;
-};
-
-export enum SortOrder {
-  /** Sorts on the value in ascending order. */
-  Asc = 'ASC',
-  /** Sorts on the value in descending order. */
-  Desc = 'DESC'
+export enum CommnunityStatus {
+  Active = 'active',
+  Inactive = 'inactive'
 }
 
-export type Span = {
-  _key: Maybe<Scalars['String']['output']>;
-  _type: Maybe<Scalars['String']['output']>;
-  marks: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  text: Maybe<Scalars['String']['output']>;
+/** Representation of a Community */
+export type Community = {
+  banner: Maybe<Scalars['String']['output']>;
+  description: Maybe<Scalars['String']['output']>;
+  events: Array<Event>;
+  id: Scalars['ID']['output'];
+  logo: Maybe<Scalars['String']['output']>;
+  name: Maybe<Scalars['String']['output']>;
+  status: CommnunityStatus;
+  users: Array<User>;
 };
 
-export type Status = Document & {
-  /** Date the document was created */
-  _createdAt: Maybe<Scalars['DateTime']['output']>;
-  /** Document ID */
-  _id: Maybe<Scalars['ID']['output']>;
-  _key: Maybe<Scalars['String']['output']>;
-  /** Current document revision */
-  _rev: Maybe<Scalars['String']['output']>;
-  /** Document type */
-  _type: Maybe<Scalars['String']['output']>;
-  /** Date the document was last modified */
-  _updatedAt: Maybe<Scalars['DateTime']['output']>;
-  key: Maybe<Slug>;
-  /** Descriptive name of the status */
-  statusName: Maybe<Scalars['String']['output']>;
+/** Representation of a workEmail */
+export type Company = {
+  description: Maybe<Scalars['String']['output']>;
+  domain: Scalars['String']['output'];
+  hasBeenUpdated: Scalars['Boolean']['output'];
+  id: Scalars['ID']['output'];
+  logo: Maybe<Scalars['String']['output']>;
+  name: Maybe<Scalars['String']['output']>;
+  salarySubmissions: Scalars['Int']['output'];
+  /** Not available to users */
+  status: Maybe<CompanyStatus>;
+  website: Maybe<Scalars['String']['output']>;
 };
 
-export type StatusFilter = {
-  /** Apply filters on document level */
-  _: InputMaybe<Sanity_DocumentFilter>;
-  _createdAt: InputMaybe<DatetimeFilter>;
-  _id: InputMaybe<IdFilter>;
-  _key: InputMaybe<StringFilter>;
-  _rev: InputMaybe<StringFilter>;
-  _type: InputMaybe<StringFilter>;
-  _updatedAt: InputMaybe<DatetimeFilter>;
-  key: InputMaybe<SlugFilter>;
-  statusName: InputMaybe<StringFilter>;
+export enum CompanyStatus {
+  Active = 'active',
+  Draft = 'draft',
+  Inactive = 'inactive'
+}
+
+/** Representation of a consolidated payment entry log calculation */
+export type ConsolidatedPaymentLogEntry = {
+  currencyId: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  platform: Scalars['String']['output'];
+  totalTransactionAmount: Scalars['Float']['output'];
 };
 
-export type StatusSorting = {
-  _createdAt: InputMaybe<SortOrder>;
-  _id: InputMaybe<SortOrder>;
-  _key: InputMaybe<SortOrder>;
-  _rev: InputMaybe<SortOrder>;
-  _type: InputMaybe<SortOrder>;
-  _updatedAt: InputMaybe<SortOrder>;
-  key: InputMaybe<SlugSorting>;
-  statusName: InputMaybe<SortOrder>;
+export type CreateCommunityInput = {
+  description: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  slug: Scalars['String']['input'];
 };
 
-export type StringFilter = {
-  /** Checks if the value is equal to the given input. */
-  eq: InputMaybe<Scalars['String']['input']>;
-  in: InputMaybe<Array<Scalars['String']['input']>>;
-  /** Checks if the value is defined. */
-  is_defined: InputMaybe<Scalars['Boolean']['input']>;
-  /** Checks if the value matches the given word/words. */
-  matches: InputMaybe<Scalars['String']['input']>;
-  /** Checks if the value is not equal to the given input. */
-  neq: InputMaybe<Scalars['String']['input']>;
-  nin: InputMaybe<Array<Scalars['String']['input']>>;
+export type CreateCompanyInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  /** The email domain of the company (What we'll use to match the company to the user on account-creation) */
+  domain: Scalars['String']['input'];
+  logo: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  status: InputMaybe<CompanyStatus>;
+  website: InputMaybe<Scalars['String']['input']>;
 };
 
-export type AllEventsQueryVariables = Exact<{
-  where: InputMaybe<EventFilter>;
-  sort: InputMaybe<Array<EventSorting> | EventSorting>;
+export type CreatePlaceholderUsersInput = {
+  users: Array<PlaceHolderUsersInput>;
+};
+
+export type CreateSalaryInput = {
+  amount: Scalars['Int']['input'];
+  companyId: Scalars['String']['input'];
+  confirmationToken: Scalars['String']['input'];
+  countryCode: Scalars['String']['input'];
+  currencyCode: Scalars['String']['input'];
+  gender: Gender;
+  genderOtherText: Scalars['String']['input'];
+  typeOfEmployment: TypeOfEmployment;
+  workMetodology: WorkMetodology;
+  workSeniorityAndRoleId: Scalars['String']['input'];
+  yearsOfExperience: Scalars['Int']['input'];
+};
+
+export enum EmailStatus {
+  Confirmed = 'confirmed',
+  Pending = 'pending',
+  Rejected = 'rejected'
+}
+
+export type EnqueueGoogleAlbumImportInput = {
+  albumId: Scalars['String']['input'];
+  sanityEventId: Scalars['String']['input'];
+  token: Scalars['String']['input'];
+};
+
+/** Representation of an Event (Events and Users, is what tickets are linked to) */
+export type Event = {
+  address: Maybe<Scalars['String']['output']>;
+  bannerImageSanityRef: Maybe<Scalars['String']['output']>;
+  community: Maybe<Community>;
+  description: Maybe<Scalars['String']['output']>;
+  endDateTime: Maybe<Scalars['DateTime']['output']>;
+  galleries: Array<Gallery>;
+  id: Scalars['ID']['output'];
+  images: Array<SanityAssetRef>;
+  latitude: Maybe<Scalars['String']['output']>;
+  longitude: Maybe<Scalars['String']['output']>;
+  meetingURL: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  schedules: Array<Schedule>;
+  speakers: Array<Speaker>;
+  startDateTime: Scalars['DateTime']['output'];
+  status: EventStatus;
+  tags: Array<Tag>;
+  teams: Array<TeamRef>;
+  /** List of tickets for sale or redemption for this event. (If you are looking for a user's tickets, use the usersTickets field) */
+  tickets: Array<Ticket>;
+  users: Array<User>;
+  /** List of tickets that a user owns for this event. */
+  usersTickets: Array<UserTicket>;
+  visibility: EventVisibility;
+};
+
+
+/** Representation of an Event (Events and Users, is what tickets are linked to) */
+export type EventTicketsArgs = {
+  input: InputMaybe<EventsTicketTemplateSearchInput>;
+};
+
+
+/** Representation of an Event (Events and Users, is what tickets are linked to) */
+export type EventUsersTicketsArgs = {
+  input: InputMaybe<EventsTicketsSearchInput>;
+};
+
+export type EventCreateInput = {
+  address: InputMaybe<Scalars['String']['input']>;
+  communityId: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  endDateTime: InputMaybe<Scalars['DateTime']['input']>;
+  latitude: InputMaybe<Scalars['String']['input']>;
+  longitude: InputMaybe<Scalars['String']['input']>;
+  meetingURL: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  startDateTime: Scalars['DateTime']['input'];
+  status: InputMaybe<EventStatus>;
+  timeZone: InputMaybe<Scalars['String']['input']>;
+  visibility: InputMaybe<EventVisibility>;
+};
+
+export type EventEditInput = {
+  address: InputMaybe<Scalars['String']['input']>;
+  description: InputMaybe<Scalars['String']['input']>;
+  endDateTime: InputMaybe<Scalars['DateTime']['input']>;
+  eventId: Scalars['String']['input'];
+  latitude: InputMaybe<Scalars['String']['input']>;
+  longitude: InputMaybe<Scalars['String']['input']>;
+  meetingURL: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  startDateTime: InputMaybe<Scalars['DateTime']['input']>;
+  status: InputMaybe<EventStatus>;
+  timeZone: InputMaybe<Scalars['String']['input']>;
+  visibility: InputMaybe<EventVisibility>;
+};
+
+/** Search for tags */
+export type EventImageSearch = {
+  eventId: Scalars['String']['input'];
+};
+
+export enum EventStatus {
+  Active = 'active',
+  Inactive = 'inactive'
+}
+
+export enum EventVisibility {
+  Private = 'private',
+  Public = 'public',
+  Unlisted = 'unlisted'
+}
+
+export type EventsSearchInput = {
+  id: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  startDateTimeFrom: InputMaybe<Scalars['DateTime']['input']>;
+  startDateTimeTo: InputMaybe<Scalars['DateTime']['input']>;
+  status: InputMaybe<EventStatus>;
+  ticketTags: InputMaybe<Array<Scalars['String']['input']>>;
+  userHasTickets: InputMaybe<Scalars['Boolean']['input']>;
+  visibility: InputMaybe<EventVisibility>;
+};
+
+export type EventsTicketTemplateSearchInput = {
+  tags: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type EventsTicketsSearchInput = {
+  approvalStatus: InputMaybe<TicketApprovalStatus>;
+  id: InputMaybe<Scalars['String']['input']>;
+  paymentStatus: InputMaybe<TicketPaymentStatus>;
+  redemptionStatus: InputMaybe<TicketRedemptionStatus>;
+};
+
+export type FindUserTicketSearchInput = {
+  approvalStatus: InputMaybe<Array<TicketApprovalStatus>>;
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+  paymentStatus: InputMaybe<Array<TicketPaymentStatus>>;
+  redemptionStatus: InputMaybe<Array<TicketRedemptionStatus>>;
+  ticketsIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userTicketIds: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** Representation of a Gallery, usually associated to an event */
+export type Gallery = {
+  description: Maybe<Scalars['String']['output']>;
+  event: Maybe<Event>;
+  id: Scalars['ID']['output'];
+  images: Array<Image>;
+  name: Scalars['String']['output'];
+};
+
+export enum Gender {
+  Agender = 'Agender',
+  Female = 'Female',
+  Genderfluid = 'Genderfluid',
+  Genderqueer = 'Genderqueer',
+  Male = 'Male',
+  NonBinary = 'NonBinary',
+  Other = 'Other',
+  PreferNotToSay = 'PreferNotToSay',
+  TransgenderFemale = 'TransgenderFemale',
+  TransgenderMale = 'TransgenderMale',
+  TwoSpirit = 'TwoSpirit',
+  Empty = 'empty'
+}
+
+export type GeneratePaymentLinkInput = {
+  currencyId: Scalars['String']['input'];
+};
+
+export type GiftTicketsToUserInput = {
+  allowMultipleTicketsPerUsers: Scalars['Boolean']['input'];
+  autoApproveTickets: Scalars['Boolean']['input'];
+  notifyUsers: Scalars['Boolean']['input'];
+  ticketIds: Array<Scalars['String']['input']>;
+  userIds: Array<Scalars['String']['input']>;
+};
+
+/** An image, usually associated to a gallery */
+export type Image = {
+  gallery: Maybe<Gallery>;
+  hosting: ImageHostingEnum;
+  id: Scalars['ID']['output'];
+  url: Scalars['String']['output'];
+};
+
+export enum ImageHostingEnum {
+  Cloudflare = 'cloudflare',
+  Sanity = 'sanity'
+}
+
+export type Mutation = {
+  acceptGiftedTicket: UserTicket;
+  /** Accept the user's invitation to a team */
+  acceptTeamInvitation: TeamRef;
+  /** Try to add a person to a team */
+  addPersonToTeam: AddUserToTeamResponseRef;
+  /** Apply to a waitlist */
+  applyToWaitlist: UserTicket;
+  /** Approve a ticket */
+  approvalUserTicket: UserTicket;
+  /** Cancel a ticket */
+  cancelUserTicket: UserTicket;
+  /** Check the status of a purchase order */
+  checkPurchaseOrderStatus: PurchaseOrder;
+  /** Attempt to claim a certain ammount of tickets */
+  claimUserTicket: RedeemUserTicketResponse;
+  /** Create an community */
+  createCommunity: Community;
+  /** Create a company */
+  createCompany: Company;
+  /** Create an event */
+  createEvent: Event;
+  /** Create placeholder users (used for things like invitations) */
+  createPlaceholderdUsers: Array<User>;
+  /** Create a salary */
+  createSalary: Salary;
+  /** Create a team, associated to a specific event */
+  createTeam: TeamRef;
+  /** Create a ticket */
+  createTicket: Ticket;
+  /** Try to add a person to a team */
+  deletePersonFomTeam: TeamRef;
+  /** Edit an community */
+  editCommunity: Community;
+  /** Edit an event */
+  editEvent: Event;
+  /** Edit a ticket */
+  editTicket: Ticket;
+  /** Enqueue images to import */
+  enqueueGoogleAlbumImport: Scalars['Boolean']['output'];
+  /** Gift tickets to users, allowing multiple tickets per user, and conditionally notify them */
+  giftTicketsToUsers: Array<UserTicket>;
+  /** Create a purchase order */
+  payForPurchaseOrder: PurchaseOrder;
+  /** Redeem a ticket */
+  redeemUserTicket: UserTicket;
+  /** Reject the user's invitation to a team */
+  rejectTeamInvitation: TeamRef;
+  /** Kickoff the email validation flow. This flow will links an email to a user, create a company if it does not exist, and allows filling data for that email's position */
+  startWorkEmailValidation: WorkEmail;
+  triggerUserTicketApprovalReview: Array<UserTicket>;
+  /** Update a company */
+  updateCompany: Company;
+  updateMyUserData: User;
+  /** Create a salary */
+  updateSalary: Salary;
+  /** Updates a team information */
+  updateTeam: TeamRef;
+  /** Update a user */
+  updateUser: User;
+  /** Update a user role */
+  updateUserRoleInCommunity: User;
+  /** Validates work email for a user */
+  validateWorkEmail: WorkEmail;
+};
+
+
+export type MutationAcceptGiftedTicketArgs = {
+  userTicketId: Scalars['String']['input'];
+};
+
+
+export type MutationAcceptTeamInvitationArgs = {
+  input: AcceptTeamInvitationInput;
+};
+
+
+export type MutationAddPersonToTeamArgs = {
+  input: AddPersonToTeamInput;
+};
+
+
+export type MutationApplyToWaitlistArgs = {
+  ticketId: Scalars['String']['input'];
+};
+
+
+export type MutationApprovalUserTicketArgs = {
+  userTicketId: Scalars['String']['input'];
+};
+
+
+export type MutationCancelUserTicketArgs = {
+  userTicketId: Scalars['String']['input'];
+};
+
+
+export type MutationCheckPurchaseOrderStatusArgs = {
+  input: CheckForPurchaseOrderInput;
+};
+
+
+export type MutationClaimUserTicketArgs = {
+  input: TicketClaimInput;
+};
+
+
+export type MutationCreateCommunityArgs = {
+  input: CreateCommunityInput;
+};
+
+
+export type MutationCreateCompanyArgs = {
+  input: CreateCompanyInput;
+};
+
+
+export type MutationCreateEventArgs = {
+  input: EventCreateInput;
+};
+
+
+export type MutationCreatePlaceholderdUsersArgs = {
+  input: CreatePlaceholderUsersInput;
+};
+
+
+export type MutationCreateSalaryArgs = {
+  input: CreateSalaryInput;
+};
+
+
+export type MutationCreateTeamArgs = {
+  input: TeamCreateInput;
+};
+
+
+export type MutationCreateTicketArgs = {
+  input: TicketCreateInput;
+};
+
+
+export type MutationDeletePersonFomTeamArgs = {
+  input: RemovePersonFromTeamInput;
+};
+
+
+export type MutationEditCommunityArgs = {
+  input: UpdateCommunityInput;
+};
+
+
+export type MutationEditEventArgs = {
+  input: EventEditInput;
+};
+
+
+export type MutationEditTicketArgs = {
+  input: TicketEditInput;
+};
+
+
+export type MutationEnqueueGoogleAlbumImportArgs = {
+  input: EnqueueGoogleAlbumImportInput;
+};
+
+
+export type MutationGiftTicketsToUsersArgs = {
+  input: GiftTicketsToUserInput;
+};
+
+
+export type MutationPayForPurchaseOrderArgs = {
+  input: PayForPurchaseOrderInput;
+};
+
+
+export type MutationRedeemUserTicketArgs = {
+  userTicketId: Scalars['String']['input'];
+};
+
+
+export type MutationRejectTeamInvitationArgs = {
+  input: RejectTeamInvitationInput;
+};
+
+
+export type MutationStartWorkEmailValidationArgs = {
+  email: Scalars['String']['input'];
+};
+
+
+export type MutationTriggerUserTicketApprovalReviewArgs = {
+  eventId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateCompanyArgs = {
+  input: UpdateCompanyInput;
+};
+
+
+export type MutationUpdateMyUserDataArgs = {
+  input: UpdateUserDataInput;
+};
+
+
+export type MutationUpdateSalaryArgs = {
+  input: UpdateSalaryInput;
+};
+
+
+export type MutationUpdateTeamArgs = {
+  input: UpdateTeamInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  input: UserEditInput;
+};
+
+
+export type MutationUpdateUserRoleInCommunityArgs = {
+  input: UpdateUserRoleInCommunityInput;
+};
+
+
+export type MutationValidateWorkEmailArgs = {
+  confirmationToken: Scalars['String']['input'];
+};
+
+export type MyPurchaseOrdersInput = {
+  paymentPlatform: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MyTicketsSearchValues = {
+  approvalStatus: InputMaybe<Array<TicketApprovalStatus>>;
+  eventId: InputMaybe<Scalars['String']['input']>;
+  paymentStatus: InputMaybe<Array<TicketPaymentStatus>>;
+  redemptionStatus: InputMaybe<Array<TicketRedemptionStatus>>;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedEvent = {
+  data: Array<Event>;
+  pagination: Pagination;
+};
+
+export type PaginatedInputEventsSearchInput = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<EventsSearchInput>;
+};
+
+export type PaginatedInputFindUserTicketSearchInput = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<FindUserTicketSearchInput>;
+};
+
+export type PaginatedInputMyPurchaseOrdersInput = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<MyPurchaseOrdersInput>;
+};
+
+export type PaginatedInputMyTicketsSearchValues = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<MyTicketsSearchValues>;
+};
+
+export type PaginatedInputTeamSearchValues = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<TeamSearchValues>;
+};
+
+export type PaginatedInputUserSearchValues = {
+  pagination: PaginationSearchInputParams;
+  search: InputMaybe<UserSearchValues>;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedPurchaseOrder = {
+  data: Array<PurchaseOrder>;
+  pagination: Pagination;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedTeamRef = {
+  data: Array<TeamRef>;
+  pagination: Pagination;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedUser = {
+  data: Array<User>;
+  pagination: Pagination;
+};
+
+/** Type used for querying the paginated leaves and it's paginated meta data */
+export type PaginatedUserTicket = {
+  data: Array<UserTicket>;
+  pagination: Pagination;
+};
+
+/** Pagination meta data */
+export type Pagination = {
+  currentPage: Scalars['Int']['output'];
+  pageSize: Scalars['Int']['output'];
+  totalPages: Scalars['Int']['output'];
+  totalRecords: Scalars['Int']['output'];
+};
+
+export type PaginationSearchInputParams = {
+  /** Page number, starts at 0 */
+  page: Scalars['Int']['input'];
+  pageSize: Scalars['Int']['input'];
+};
+
+export enum ParticipationStatus {
+  Accepted = 'accepted',
+  NotAccepted = 'not_accepted',
+  WaitingResolution = 'waiting_resolution'
+}
+
+export type PayForPurchaseOrderInput = {
+  currencyID: Scalars['String']['input'];
+  purchaseOrderId: Scalars['String']['input'];
+};
+
+/** Representation of a TicketPrice */
+export type Price = {
+  amount: Scalars['Int']['output'];
+  currency: AllowedCurrency;
+  id: Scalars['ID']['output'];
+};
+
+export type PricingInputField = {
+  currencyId: Scalars['String']['input'];
+  /** The price. But in cents, so for a $10 ticket, you'd pass 1000 (or 10_00), or for 1000 chilean pesos, you'd pass 1000_00 */
+  value_in_cents: Scalars['Int']['input'];
+};
+
+export enum PronounsEnum {
+  Empty = 'empty',
+  HeHim = 'heHim',
+  Other = 'other',
+  SheHer = 'sheHer',
+  TheyThem = 'theyThem'
+}
+
+/** Representation of a payment log entry */
+export type PublicFinanceEntryRef = {
+  createdAt: Scalars['DateTime']['output'];
+  currencyId: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  platform: Scalars['String']['output'];
+  transactionAmount: Scalars['Float']['output'];
+  transactionDate: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PublicTicketInput = {
+  publicTicketId: Scalars['String']['input'];
+};
+
+/** Representation of the public information of a User ticket */
+export type PublicUserTicket = {
+  id: Scalars['ID']['output'];
+  ticket: Ticket;
+  userImage: Maybe<Scalars['String']['output']>;
+  userName: Maybe<Scalars['String']['output']>;
+  userUsername: Maybe<Scalars['String']['output']>;
+};
+
+/** Representation of a Purchase Order */
+export type PurchaseOrder = {
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  currency: Maybe<AllowedCurrency>;
+  finalPrice: Maybe<Scalars['Float']['output']>;
+  id: Scalars['ID']['output'];
+  paymentLink: Maybe<Scalars['String']['output']>;
+  paymentPlatform: Maybe<Scalars['String']['output']>;
+  purchasePaymentStatus: Maybe<PurchaseOrderPaymentStatusEnum>;
+  status: Maybe<PurchaseOrderStatusEnum>;
+  tickets: Array<UserTicket>;
+};
+
+export type PurchaseOrderInput = {
+  quantity: Scalars['Int']['input'];
+  ticketId: Scalars['String']['input'];
+};
+
+export enum PurchaseOrderPaymentStatusEnum {
+  NotRequired = 'not_required',
+  Paid = 'paid',
+  Unpaid = 'unpaid'
+}
+
+export enum PurchaseOrderStatusEnum {
+  Complete = 'complete',
+  Expired = 'expired',
+  Open = 'open'
+}
+
+export type Query = {
+  /** Get a list of communities. Filter by name, id, or status */
+  communities: Array<Community>;
+  /** Get a community by id */
+  community: Maybe<Community>;
+  /** Get all available companies */
+  companies: Array<Company>;
+  /** Get all available companies */
+  company: Company;
+  /** Get an event by id */
+  event: Maybe<Event>;
+  /** Get a list of images, that are attached to an event */
+  eventImages: Array<SanityAssetRef>;
+  /** Get a list of user tickets */
+  findUserTickets: PaginatedUserTicket;
+  /** Get a single waitlist */
+  getWaitlist: Waitlist;
+  /** Get the current user */
+  me: User;
+  /** Get a list of purchase orders for the authenticated user */
+  myPurchaseOrders: PaginatedPurchaseOrder;
+  /** Get a list of tickets for the current user */
+  myTickets: PaginatedUserTicket;
+  /** Get a list of user tickets */
+  publicTicketInfo: PublicUserTicket;
+  /** Get a list of salaries associated to the user */
+  salaries: Array<Salary>;
+  /** Get a schedule by its ID */
+  schedule: Schedule;
+  /** Search a consolidated payment logs, by date, aggregated by platform and currency_id */
+  searchConsolidatedPaymentLogs: Array<ConsolidatedPaymentLogEntry>;
+  /** Get a list of events. Filter by name, id, status or date */
+  searchEvents: PaginatedEvent;
+  /** Search on the payment logs by date, and returns a list of payment logs */
+  searchPaymentLogs: Array<PublicFinanceEntryRef>;
+  searchTeams: PaginatedTeamRef;
+  status: Scalars['String']['output'];
+  /** Get a list of tags */
+  tags: Array<Tag>;
+  /** Get a list of users */
+  userSearch: PaginatedUser;
+  /** Get a list of users */
+  users: Array<User>;
+  /** Get a workEmail and check if its validated for this user */
+  workEmail: WorkEmail;
+  /** Get a list of validated work emails for the user */
+  workEmails: Array<ValidatedWorkEmail>;
+  /** Get a a work role's seniorities */
+  workRoleSeniorities: Array<WorkSeniority>;
+  /** Get a list of possible work roles */
+  workRoles: Array<WorkRole>;
+};
+
+
+export type QueryCommunitiesArgs = {
+  id: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  status: InputMaybe<CommnunityStatus>;
+};
+
+
+export type QueryCommunityArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryCompaniesArgs = {
+  input: InputMaybe<SearchCompaniesInput>;
+};
+
+
+export type QueryCompanyArgs = {
+  companyId: Scalars['String']['input'];
+};
+
+
+export type QueryEventArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryEventImagesArgs = {
+  input: EventImageSearch;
+};
+
+
+export type QueryFindUserTicketsArgs = {
+  input: PaginatedInputFindUserTicketSearchInput;
+};
+
+
+export type QueryGetWaitlistArgs = {
+  ticketId: Scalars['String']['input'];
+};
+
+
+export type QueryMyPurchaseOrdersArgs = {
+  input: PaginatedInputMyPurchaseOrdersInput;
+};
+
+
+export type QueryMyTicketsArgs = {
+  input: PaginatedInputMyTicketsSearchValues;
+};
+
+
+export type QueryPublicTicketInfoArgs = {
+  input: PublicTicketInput;
+};
+
+
+export type QueryScheduleArgs = {
+  scheduleId: Scalars['String']['input'];
+};
+
+
+export type QuerySearchConsolidatedPaymentLogsArgs = {
+  input: SearchPaymentLogsInput;
+};
+
+
+export type QuerySearchEventsArgs = {
+  input: PaginatedInputEventsSearchInput;
+};
+
+
+export type QuerySearchPaymentLogsArgs = {
+  input: SearchPaymentLogsInput;
+};
+
+
+export type QuerySearchTeamsArgs = {
+  input: PaginatedInputTeamSearchValues;
+};
+
+
+export type QueryStatusArgs = {
+  name: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryTagsArgs = {
+  input: InputMaybe<TagSearchInput>;
+};
+
+
+export type QueryUserSearchArgs = {
+  input: PaginatedInputUserSearchValues;
+};
+
+
+export type QueryWorkEmailArgs = {
+  email: Scalars['String']['input'];
+};
+
+
+export type QueryWorkRoleSenioritiesArgs = {
+  input: WorkRoleSenioritiesInput;
+};
+
+export type RsvpFilterInput = {
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type RedeemUserTicketError = {
+  error: Scalars['Boolean']['output'];
+  errorMessage: Scalars['String']['output'];
+};
+
+export type RedeemUserTicketResponse = PurchaseOrder | RedeemUserTicketError;
+
+export type RejectTeamInvitationInput = {
+  teamId: Scalars['String']['input'];
+};
+
+export type RemovePersonFromTeamInput = {
+  teamId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
+/** Representation of a workEmail */
+export type Salary = {
+  amount: Scalars['Int']['output'];
+  company: Company;
+  countryCode: Scalars['String']['output'];
+  currencyCode: Scalars['String']['output'];
+  gender: Maybe<Gender>;
+  genderOtherText: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  typeOfEmployment: TypeOfEmployment;
+  workMetodology: WorkMetodology;
+  workRole: WorkRole;
+  workSeniority: WorkSeniority;
+  yearsOfExperience: Scalars['Int']['output'];
+};
+
+/** Representation of a Sanity Asset */
+export type SanityAssetRef = {
+  assetId: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  originalFilename: Scalars['String']['output'];
+  path: Scalars['String']['output'];
+  size: Scalars['Int']['output'];
+  url: Scalars['String']['output'];
+};
+
+/** Representation of a Schedule */
+export type Schedule = {
+  description: Maybe<Scalars['String']['output']>;
+  endTimestamp: Scalars['DateTime']['output'];
+  event: Event;
+  id: Scalars['ID']['output'];
+  sessions: Array<Session>;
+  startTimestamp: Scalars['DateTime']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type SearchCompaniesInput = {
+  companyName: InputMaybe<Scalars['String']['input']>;
+  description: InputMaybe<Scalars['String']['input']>;
+  domain: InputMaybe<Scalars['String']['input']>;
+  website: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SearchPaymentLogsInput = {
+  endDate: InputMaybe<Scalars['DateTime']['input']>;
+  startDate: Scalars['DateTime']['input'];
+};
+
+export enum SearchableUserTags {
+  CoreTeam = 'CORE_TEAM',
+  DevTeam = 'DEV_TEAM',
+  Donor = 'DONOR'
+}
+
+export enum ServiceErrors {
+  AlreadyExists = 'ALREADY_EXISTS',
+  Conflict = 'CONFLICT',
+  FailedPrecondition = 'FAILED_PRECONDITION',
+  Forbidden = 'FORBIDDEN',
+  InternalServerError = 'INTERNAL_SERVER_ERROR',
+  InvalidArgument = 'INVALID_ARGUMENT',
+  NotFound = 'NOT_FOUND',
+  Unauthenticated = 'UNAUTHENTICATED',
+  Unauthorized = 'UNAUTHORIZED'
+}
+
+/** Representation of a Session */
+export type Session = {
+  description: Maybe<Scalars['String']['output']>;
+  endTimestamp: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  speakers: Array<Speaker>;
+  startTimestamp: Scalars['DateTime']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type SessionSearch = {
+  description: InputMaybe<Scalars['String']['input']>;
+  endDate: InputMaybe<Scalars['String']['input']>;
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+  sessionIds: InputMaybe<Array<Scalars['String']['input']>>;
+  speakerIds: InputMaybe<Array<Scalars['String']['input']>>;
+  startDate: InputMaybe<Scalars['String']['input']>;
+  title: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Representation of a Speaker */
+export type Speaker = {
+  avatar: Maybe<Scalars['String']['output']>;
+  bio: Maybe<Scalars['String']['output']>;
+  company: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  rol: Maybe<Scalars['String']['output']>;
+  sessions: Array<Session>;
+  socials: Array<Scalars['String']['output']>;
+};
+
+/** Representation of a tag. Tags can be associated to many things. An event, a community, etc. */
+export type Tag = {
+  description: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Maybe<Scalars['String']['output']>;
+  slug: Scalars['String']['output'];
+};
+
+export type TagSearchInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TeamCreateInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  eventId: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+/** Representation of a team. This is compsed of a group of users and is attached to a specific event */
+export type TeamRef = {
+  description: Maybe<Scalars['String']['output']>;
+  event: Event;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  status: TeamStatus;
+  users: Array<UserWithStatusRef>;
+};
+
+export type TeamSearchValues = {
+  eventIds: InputMaybe<Array<Scalars['String']['input']>>;
+  name: InputMaybe<Scalars['String']['input']>;
+  status: InputMaybe<Array<TeamStatus>>;
+  teamIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userIds: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export enum TeamStatus {
+  Accepted = 'accepted',
+  Invited = 'invited',
+  NotAccepted = 'not_accepted',
+  WaitingResolution = 'waiting_resolution'
+}
+
+/** Representation of a ticket */
+export type Ticket = {
+  description: Maybe<Scalars['String']['output']>;
+  endDateTime: Maybe<Scalars['DateTime']['output']>;
+  event: Event;
+  externalLink: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  imageLink: Maybe<Scalars['String']['output']>;
+  /** Whether or not the ticket is free */
+  isFree: Scalars['Boolean']['output'];
+  /** Whether or not the ticket has an unlimited quantity. This is reserved for things loike online events. */
+  isUnlimited: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  prices: Maybe<Array<Price>>;
+  /** The number of tickets available for this ticket type */
+  quantity: Maybe<Scalars['Int']['output']>;
+  quantityLeft: Maybe<Scalars['Int']['output']>;
+  requiresApproval: Scalars['Boolean']['output'];
+  startDateTime: Scalars['DateTime']['output'];
+  status: TicketTemplateStatus;
+  tags: Array<Scalars['String']['output']>;
+  visibility: TicketTemplateVisibility;
+};
+
+export enum TicketApprovalStatus {
+  Approved = 'approved',
+  Cancelled = 'cancelled',
+  GiftAccepted = 'gift_accepted',
+  Gifted = 'gifted',
+  NotRequired = 'not_required',
+  Pending = 'pending',
+  Rejected = 'rejected'
+}
+
+export type TicketClaimInput = {
+  /** If this field is passed, a purchase order payment link will be generated right away */
+  generatePaymentLink: InputMaybe<GeneratePaymentLinkInput>;
+  purchaseOrder: Array<PurchaseOrderInput>;
+};
+
+export type TicketCreateInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  endDateTime: InputMaybe<Scalars['DateTime']['input']>;
+  eventId: Scalars['String']['input'];
+  externalLink: InputMaybe<Scalars['String']['input']>;
+  imageLink: InputMaybe<Scalars['String']['input']>;
+  /** If the ticket is free, the price submitted will be ignored. */
+  isFree: Scalars['Boolean']['input'];
+  maxTicketsPerUser: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  prices: InputMaybe<Array<PricingInputField>>;
+  quantity: InputMaybe<Scalars['Int']['input']>;
+  requiresApproval: InputMaybe<Scalars['Boolean']['input']>;
+  startDateTime: Scalars['DateTime']['input'];
+  status: InputMaybe<TicketTemplateStatus>;
+  tags: InputMaybe<Array<Scalars['String']['input']>>;
+  /** If provided, quantity must not be passed. This is for things like online events where there is no limit to the amount of tickets that can be sold. */
+  unlimitedTickets: Scalars['Boolean']['input'];
+  visibility: InputMaybe<TicketTemplateVisibility>;
+};
+
+export type TicketEditInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  endDateTime: InputMaybe<Scalars['DateTime']['input']>;
+  eventId: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  prices: InputMaybe<Array<PricingInputField>>;
+  quantity: InputMaybe<Scalars['Int']['input']>;
+  requiresApproval: InputMaybe<Scalars['Boolean']['input']>;
+  startDateTime: InputMaybe<Scalars['DateTime']['input']>;
+  status: InputMaybe<TicketTemplateStatus>;
+  ticketId: Scalars['String']['input'];
+  /** If provided, quantity must not be passed. This is for things like online events where there is no limit to the amount of tickets that can be sold. */
+  unlimitedTickets: InputMaybe<Scalars['Boolean']['input']>;
+  visibility: InputMaybe<TicketTemplateVisibility>;
+};
+
+export enum TicketPaymentStatus {
+  NotRequired = 'not_required',
+  Paid = 'paid',
+  Unpaid = 'unpaid'
+}
+
+export enum TicketRedemptionStatus {
+  Pending = 'pending',
+  Redeemed = 'redeemed'
+}
+
+export enum TicketTemplateStatus {
+  Active = 'active',
+  Inactive = 'inactive'
+}
+
+export enum TicketTemplateVisibility {
+  Private = 'private',
+  Public = 'public',
+  Unlisted = 'unlisted'
+}
+
+export enum TypeOfEmployment {
+  Freelance = 'freelance',
+  FullTime = 'fullTime',
+  PartTime = 'partTime'
+}
+
+export type UpdateCommunityInput = {
+  communityId: Scalars['String']['input'];
+  description: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  slug: InputMaybe<Scalars['String']['input']>;
+  status: InputMaybe<CommnunityStatus>;
+};
+
+export type UpdateCompanyInput = {
+  companyId: Scalars['String']['input'];
+  description: InputMaybe<Scalars['String']['input']>;
+  domain: InputMaybe<Scalars['String']['input']>;
+  logo: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  website: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateSalaryInput = {
+  amount: InputMaybe<Scalars['Int']['input']>;
+  confirmationToken: Scalars['String']['input'];
+  countryCode: InputMaybe<Scalars['String']['input']>;
+  currencyCode: InputMaybe<Scalars['String']['input']>;
+  gender: InputMaybe<Gender>;
+  genderOtherText: InputMaybe<Scalars['String']['input']>;
+  salaryId: Scalars['String']['input'];
+  typeOfEmployment: InputMaybe<TypeOfEmployment>;
+  workMetodology: InputMaybe<WorkMetodology>;
+  workSeniorityAndRoleId: InputMaybe<Scalars['String']['input']>;
+  yearsOfExperience: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UpdateTeamInput = {
+  description: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  teamId: Scalars['String']['input'];
+};
+
+/** Representation of a user */
+export type User = {
+  bio: Maybe<Scalars['String']['output']>;
+  communities: Array<Community>;
+  email: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  imageUrl: Maybe<Scalars['String']['output']>;
+  impersonatedUser: Maybe<User>;
+  isSuperAdmin: Maybe<Scalars['Boolean']['output']>;
+  lastName: Maybe<Scalars['String']['output']>;
+  name: Maybe<Scalars['String']['output']>;
+  pronouns: Maybe<PronounsEnum>;
+  /** Get a list of user's RSVPs */
+  rsvps: Array<UserTicket>;
+  teams: Array<TeamRef>;
+  userData: Maybe<UserData>;
+  username: Scalars['String']['output'];
+};
+
+
+/** Representation of a user */
+export type UserRsvpsArgs = {
+  input: InputMaybe<RsvpFilterInput>;
+};
+
+/** Representation of a user's data */
+export type UserData = {
+  city: Scalars['String']['output'];
+  countryOfResidence: Scalars['String']['output'];
+  emergencyPhoneNumber: Maybe<Scalars['String']['output']>;
+  foodAllergies: Maybe<Scalars['String']['output']>;
+  organizationName: Maybe<Scalars['String']['output']>;
+  roleInOrganization: Maybe<Scalars['String']['output']>;
+  rut: Maybe<Scalars['String']['output']>;
+  worksInOrganization: Scalars['Boolean']['output'];
+};
+
+export type UserSearchValues = {
+  name: InputMaybe<Scalars['String']['input']>;
+  tags: InputMaybe<Array<SearchableUserTags>>;
+  userIds: InputMaybe<Array<Scalars['String']['input']>>;
+  userName: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum UserTeamRole {
+  Leader = 'leader',
+  Member = 'member'
+}
+
+/** Representation of a User ticket */
+export type UserTicket = {
+  approvalStatus: TicketApprovalStatus;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  paymentStatus: Maybe<PurchaseOrderPaymentStatusEnum>;
+  publicId: Scalars['String']['output'];
+  purchaseOrder: Maybe<PurchaseOrder>;
+  redemptionStatus: TicketRedemptionStatus;
+  ticketTemplate: Ticket;
+  user: Maybe<User>;
+};
+
+/** Representation of a user in a team */
+export type UserWithStatusRef = {
+  id: Scalars['ID']['output'];
+  role: UserTeamRole;
+  status: ParticipationStatus;
+  user: User;
+};
+
+export enum ValidPaymentMethods {
+  MercadoPago = 'mercado_pago',
+  Stripe = 'stripe'
+}
+
+/** Representation of a work email associated to the current user */
+export type ValidatedWorkEmail = {
+  company: Maybe<Company>;
+  confirmationDate: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['ID']['output'];
+  isValidated: Scalars['Boolean']['output'];
+  status: EmailStatus;
+  workEmail: Scalars['String']['output'];
+};
+
+/** Representation of a waitlist */
+export type Waitlist = {
+  /** The ID of the waitlist. It matches the ID of the underlying ticket */
+  id: Scalars['ID']['output'];
+  myRsvp: Maybe<UserTicket>;
+  ticket: Ticket;
+};
+
+export enum WaitlistApprovalStatus {
+  Approved = 'approved',
+  Pending = 'pending',
+  Rejected = 'rejected'
+}
+
+/** Representation of a (yet to validate) work email */
+export type WorkEmail = {
+  id: Scalars['ID']['output'];
+  isValidated: Scalars['Boolean']['output'];
+};
+
+export enum WorkMetodology {
+  Hybrid = 'hybrid',
+  Office = 'office',
+  Remote = 'remote'
+}
+
+/** Representation of a work role */
+export type WorkRole = {
+  description: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  seniorities: Array<WorkSeniority>;
+};
+
+export type WorkRoleSenioritiesInput = {
+  workRoleId: Scalars['String']['input'];
+};
+
+/** Representation of a work seniority */
+export type WorkSeniority = {
+  description: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type PlaceHolderUsersInput = {
+  ciudad: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  emergencyPhoneNumber: InputMaybe<Scalars['String']['input']>;
+  foodAllergies: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  nombreOrganizacion: InputMaybe<Scalars['String']['input']>;
+  pais: InputMaybe<Scalars['String']['input']>;
+  rolEnOrganizacion: InputMaybe<Scalars['String']['input']>;
+  trabajasEnOrganizacion: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateUserDataInput = {
+  city: Scalars['String']['input'];
+  countryOfResidence: Scalars['String']['input'];
+  emergencyPhoneNumber: InputMaybe<Scalars['String']['input']>;
+  eventId: Scalars['String']['input'];
+  foodAllergies: InputMaybe<Scalars['String']['input']>;
+  organizationName: InputMaybe<Scalars['String']['input']>;
+  roleInOrganization: InputMaybe<Scalars['String']['input']>;
+  rut: InputMaybe<Scalars['String']['input']>;
+  worksInOrganization: Scalars['Boolean']['input'];
+};
+
+export type UpdateUserRoleInCommunityInput = {
+  communityId: Scalars['String']['input'];
+  role: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
+export type UserEditInput = {
+  bio: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
+  lastName: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  pronouns: InputMaybe<PronounsEnum>;
+  username: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SearchEventsQueryVariables = Exact<{
+  input: PaginatedInputEventsSearchInput;
 }>;
 
 
-export type AllEventsQuery = { allEvent: Array<{ _id: string | null, title: string | null, startDate: string | null, endDate: string | null, url: string | null, bgColor: string | null, mergedTitle: boolean | null, image: { asset: { _id: string | null, assetId: string | null, metadata: { lqip: string | null, blurHash: string | null } | null } | null } | null, project: { title: string | null, bgColor: string | null, image: { asset: { _id: string | null, assetId: string | null, metadata: { lqip: string | null } | null } | null } | null } | null }> };
-
-export type EventImagesQueryVariables = Exact<{
-  eventId: Scalars['ID']['input'];
-  where: InputMaybe<EventImageFilter>;
-}>;
+export type SearchEventsQuery = { searchEvents: { data: Array<{ id: string, name: string, galleries: Array<{ id: string, description: string | null, images: Array<{ id: string, hosting: ImageHostingEnum, url: string }> }> }> } };
 
 
-export type EventImagesQuery = { Event: { _id: string | null, title: string | null, startDate: string | null, endDate: string | null, mergedTitle: boolean | null, project: { _id: string | null, title: string | null, image: { asset: { _id: string | null, assetId: string | null, metadata: { lqip: string | null } | null } | null } | null } | null, image: { asset: { _id: string | null, assetId: string | null, metadata: { lqip: string | null } | null } | null } | null } | null, allEventImage: Array<{ _id: string | null, title: string | null, url: string | null, image: { asset: { _id: string | null, assetId: string | null, metadata: { lqip: string | null } | null } | null } | null }> };
-
-export type SingleEventImageQueryVariables = Exact<{
-  photoId: Scalars['ID']['input'];
-}>;
-
-
-export type SingleEventImageQuery = { EventImage: { _id: string | null, title: string | null, url: string | null, image: { asset: { _id: string | null, assetId: string | null, metadata: { lqip: string | null, blurHash: string | null } | null } | null } | null } | null };
-
-
-export const AllEventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"allEvents"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"EventFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"sort"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"EventSorting"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"allEvent"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"Variable","name":{"kind":"Name","value":"sort"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"bgColor"}},{"kind":"Field","name":{"kind":"Name","value":"mergedTitle"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lqip"}},{"kind":"Field","name":{"kind":"Name","value":"blurHash"}}]}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"project"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"bgColor"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lqip"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllEventsQuery, AllEventsQueryVariables>;
-export const EventImagesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"eventImages"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"eventId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"EventImageFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Event"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"eventId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}},{"kind":"Field","name":{"kind":"Name","value":"mergedTitle"}},{"kind":"Field","name":{"kind":"Name","value":"project"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lqip"}}]}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lqip"}}]}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"allEventImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lqip"}}]}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}}]}}]}}]}}]}}]} as unknown as DocumentNode<EventImagesQuery, EventImagesQueryVariables>;
-export const SingleEventImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"singleEventImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"photoId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"EventImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"photoId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_id"}},{"kind":"Field","name":{"kind":"Name","value":"metadata"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lqip"}},{"kind":"Field","name":{"kind":"Name","value":"blurHash"}}]}},{"kind":"Field","name":{"kind":"Name","value":"assetId"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SingleEventImageQuery, SingleEventImageQueryVariables>;
+export const SearchEventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"searchEvents"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PaginatedInputEventsSearchInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchEvents"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"galleries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"hosting"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<SearchEventsQuery, SearchEventsQueryVariables>;

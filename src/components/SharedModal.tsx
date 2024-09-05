@@ -1,4 +1,5 @@
 "use client";
+
 import {
   ArrowDownTrayIcon,
   ArrowTopRightOnSquareIcon,
@@ -8,12 +9,10 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
-import NextImage from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "../../utils/animationVariants";
 import type { SharedModalProps } from "../../utils/types";
-import { urlForImage } from "../lib/sanity";
 import Twitter from "./Icons/Twitter";
 
 export default function SharedModal({
@@ -24,6 +23,7 @@ export default function SharedModal({
   navigation,
   currentPhoto,
   direction,
+  galleryId,
 }: SharedModalProps) {
   const [loaded, setLoaded] = useState(false);
   const [mainImageLoaded, setMainImageLoaded] = useState(false);
@@ -74,7 +74,7 @@ export default function SharedModal({
         setMainImageLoaded(true);
       };
       imageNode.loading = "eager";
-      imageNode.src = urlForImage(image.image, options);
+      imageNode.src = image.url;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
@@ -86,23 +86,23 @@ export default function SharedModal({
 
     if (prevImage) {
       const prevImageNode = new Image();
-      prevImageNode.src = urlForImage(prevImage.image, options);
+      prevImageNode.src = prevImage.url;
     }
     if (prevPrevImage) {
       setTimeout(() => {
         const prevPrevImageNode = new Image();
-        prevPrevImageNode.src = urlForImage(prevPrevImage.image, options);
+        prevPrevImageNode.src = prevPrevImage.url;
       }, 100);
     }
 
     if (nextImage) {
       const nextImageNode = new Image();
-      nextImageNode.src = urlForImage(nextImage.image, options);
+      nextImageNode.src = nextImage.url;
     }
     if (nextNextImage) {
       setTimeout(() => {
         const nextNextImageNode = new Image();
-        nextNextImageNode.src = urlForImage(nextNextImage.image, options);
+        nextNextImageNode.src = nextNextImage.url;
       }, 100);
     }
   }, [currentImage, navigation, index, images, options]);
@@ -137,16 +137,16 @@ export default function SharedModal({
                   <AnimatePresence mode="popLayout">
                     {!mainImageLoaded && (
                       <motion.img
-                        src={currentImage.image.asset.metadata.lqip}
+                        src={currentImage.url}
                         width={navigation ? 1280 : 1920}
                         height={navigation ? 853 : 1280}
-                        alt="Blur para transicion, de una imagen de la JSConf Chile"
+                        alt=""
                         className="z-10 relative"
                       />
                     )}
                     {mainImageLoaded && (
                       <motion.img
-                        src={urlForImage(currentImage.image, options)}
+                        src={currentImage.url}
                         width={navigation ? 1280 : 1920}
                         height={navigation ? 853 : 1280}
                         alt="Imagen de la JSConf Chile"
@@ -202,11 +202,7 @@ export default function SharedModal({
                   )}
                   <div className="absolute top-0 right-0 flex items-center gap-2 p-3 text-white">
                     <a
-                      href={urlForImage(currentImage.image, {
-                        width: 4000,
-                        auto: "format",
-                        quality: 100,
-                      })}
+                      href={currentImage.url}
                       className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                       target="_blank"
                       title="Open full-size version"
@@ -215,7 +211,9 @@ export default function SharedModal({
                       <ArrowTopRightOnSquareIcon className="h-5 w-5" />
                     </a>
                     <a
-                      href={`https://twitter.com/intent/tweet?text=Mira%20esta%20foto%20de%20la%20JSConf%20Chile!%20https://gallery.jsconf.cl/p/${index}`}
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                        `¡Mira esta foto de CommunityOS! https://gallery.communityos.io/event/${galleryId}/photo/${currentImage.id}`,
+                      )}`}
                       className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                       target="_blank"
                       title="Share on Twitter"
@@ -224,12 +222,7 @@ export default function SharedModal({
                       <Twitter className="h-5 w-5" />
                     </a>
                     <a
-                      href={urlForImage(currentImage.image, {
-                        width: 4000,
-                        format: "jpg",
-                        quality: 100,
-                        forceDownload: currentImage.title,
-                      })}
+                      href={currentImage.url}
                       className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                       target="_blank"
                       title="Download fullsize version"
@@ -283,14 +276,13 @@ export default function SharedModal({
                         x: `${Math.max((index - 1) * -100, 15 * -100)}%`,
                       }}
                       animate={{
-                        scale:
-                          filteredImage._id === currentImage._id ? 1.25 : 1,
+                        scale: filteredImage.id === currentImage.id ? 1.25 : 1,
                         width: "100%",
                         x: `${Math.max(index * -100, 15 * -100)}%`,
                       }}
                       exit={{ width: "0%" }}
                       onClick={() => changePhotoId(filteredImage.index)}
-                      key={filteredImage._id}
+                      key={filteredImage.id}
                       className={`${
                         filteredImage.index === index
                           ? "z-20 rounded-md shadow shadow-black/50"
@@ -301,21 +293,16 @@ export default function SharedModal({
                           : ""
                       } relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
                     >
-                      <NextImage
-                        alt="small photos on the bottom"
+                      <img
+                        alt=""
                         width={180}
-                        placeholder="blur"
-                        blurDataURL={filteredImage.image.asset.metadata.lqip}
                         height={120}
                         className={`${
                           filteredImage.index === index
                             ? "brightness-110 hover:brightness-110"
                             : "brightness-50 contrast-125 hover:brightness-75"
                         } h-full transform object-cover transition`}
-                        src={urlForImage(filteredImage.image, {
-                          width: 180,
-                          height: 120,
-                        })}
+                        src={filteredImage.url}
                       />
                     </motion.button>
                   );
